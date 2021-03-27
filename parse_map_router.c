@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 21:13:27 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/24 16:17:20 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 19:23:04 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@ int		prs_map_rout(t_mprm *mprm, char **str, int *flg, t_list **tmp)
 
 	i = 0;
 	len = ft_strlen(*str);
+	if (len == 0)
+		free(*str);
 	while (len > 0 && (*str)[i])
 	{
 		if ((*str)[i] != 32 && !chk_in_set((*str)[i], flg))
-			return (red_flag(-1, mprm));
+			return (-1);
 		i++;
 	}
 	if (len > 0 && (*flg == 1 || *flg > 10))

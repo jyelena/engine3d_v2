@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 20:24:59 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/24 00:39:34 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 20:29:52 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,29 @@ int		red_flag(int result, t_mprm *mprm)
 	return (result);
 }
 
+void	free_map_matrix(t_mprm *mprm)
+{
+	int i;
+
+	i = 0;
+	while (i < mprm->map.d)
+	{
+		if (mprm->map.mp[i])
+			free(mprm->map.mp[i]);
+		i++;
+	}
+	if (mprm->map.mp)
+		free(mprm->map.mp);
+}
+
 int		free_all(int result, t_mprm *mprm, t_list **list, char **str)
 {
-	if (str && *str)
-		free(str);
-	if (list)
+	if (str && *str && *(*str))
+		free(*str);
+	if (list && *list)
 		free_list(list);
+	if (mprm->map.mp)
+		free_map_matrix(mprm);
 	if (result < 0)
 		mprm->ok = 0;
 	return (result);

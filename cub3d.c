@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 18:28:34 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/26 23:56:18 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 20:32:31 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ int		get_map(int *fd, t_mprm *mprm, t_list **tmp)
 	fl = 0;
 	while (get_next_line(*fd, &str))
 		if (prs_map_rout(mprm, &str, &fl, tmp) == -1 || fl == 10 || fl == 2)
-			return (-1);
+			return (free_all(-1, mprm, tmp, &str));
 	if (prs_map_rout(mprm, &str, &fl, tmp) == -1 || fl == 10 || fl == 2)
-		return (-1);
+		return (free_all(-1, mprm, tmp, &str));
 	mprm->map.d += 2;
 	mprm->map.w += 2;
 	fl = 0;
 	if (mprm->ok && !(mprm->map.mp = ft_calloc(mprm->map.d + 1, sizeof(char*))))
-		return (red_flag(-1, mprm));
-	while (fl <= mprm->map.d)
+		return (free_all(-1, mprm, tmp, &str));
+	while (fl < mprm->map.d)
 	{
 		if (!(mprm->map.mp[fl] = ft_calloc(mprm->map.w + 1, sizeof(char))))
-			return (red_flag(-1, mprm));
+			return (free_all(-1, mprm, tmp, &str));
 		fl++;
 	}
 	mprm->map.mp[fl] = NULL;
@@ -44,8 +44,9 @@ int 	map_quest(int *fd, t_mprm *mprm)
 	t_list	*tmp_map;
 
 	tmp_map = NULL;
+	str = NULL;
 	while (mprm->ok && chk_map_conf(mprm) != 8
-		   && get_next_line(*fd, &str) == 1 && prs_rout(mprm, str) != -1)
+		  && get_next_line(*fd, &str) == 1 && prs_rout(mprm, str) != -1)
 	{
 		free(str);
 		str = NULL;
@@ -83,5 +84,7 @@ int	main(int argc, char **argv)
 		write(1, NO_MAP_ERROR, sizeof(NO_MAP_ERROR));
 	}
 	free_params(&mprm);
+	if (mprm.map.mp)
+		free_map_matrix(&mprm);
 	return (0);
 }

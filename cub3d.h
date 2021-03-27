@@ -79,6 +79,7 @@ void				cub_init(t_mprm *mprm);
 void				free_params(t_mprm *mprm);
 void				free_list(t_list **list);
 void				line_cpy(char *source, char **dest, t_mprm *mprm);
+void				free_map_matrix(t_mprm *mprm);
 int					free_all(int result, t_mprm *mprm, t_list **list,
 				 	char **str);
 int 				make_map(t_mprm *mprm, t_list **tmp);
