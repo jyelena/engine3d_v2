@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 02:36:24 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/23 21:17:21 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 20:48:32 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		parse_resolut(t_mprm *mprm, char **line)
 	{
 		if (*(*line) == 32)
 			(*line)++;
-		else if (*(*line) >= '0' && *(*line) <= '9')
+		else if (*(*line) >= '0' && *(*line) <= '9' && fl <= 2)
 		{
 			fl++;
 			if (mprm->resolution.x == -1)
