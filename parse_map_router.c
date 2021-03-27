@@ -6,18 +6,18 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 21:13:27 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 19:23:04 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 21:09:24 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void 	line_cpy(char *source, char **dest, t_mprm *mprm)
+void	line_cpy(char *source, char **dest, t_mprm *mprm)
 {
 	int	i;
 
 	i = 0;
-	while(source && *source && i <= mprm->map.w - 1)
+	while (source && *source && i <= mprm->map.w - 1)
 	{
 		if (i > 0)
 		{

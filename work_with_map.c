@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 02:08:55 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 19:33:22 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 21:16:27 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,17 @@ int		valid_map(t_mprm *mprm)
 	return (1);
 }
 
-int 	make_map(t_mprm *mprm, t_list **tmp_map)
+int		make_map(t_mprm *mprm, t_list **tmp_map)
 {
 	int		d;
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = *tmp_map;
 	d = 0;
 	while ((*tmp_map) && d < mprm->map.d - 1)
 	{
 		mprm->map.mp[d] = (char *)ft_memset((void *)mprm->map.mp[d], 32,
-									  mprm->map.w);
+		mprm->map.w);
 		if (d > 0 && d < mprm->map.d - 1)
 		{
 			line_cpy(tmp->content, &mprm->map.mp[d], mprm);
@@ -97,7 +97,7 @@ int 	make_map(t_mprm *mprm, t_list **tmp_map)
 		d++;
 	}
 	mprm->map.mp[d] = (char *)ft_memset((void *)mprm->map.mp[d], 32,
-									  mprm->map.w);
+	mprm->map.w);
 	printf("|%s|\n", mprm->map.mp[d]);
 	free_list(tmp_map);
 	return (1);

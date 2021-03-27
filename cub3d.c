@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 18:28:34 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 20:58:16 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 21:05:51 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		get_map(int *fd, t_mprm *mprm, t_list **tmp)
 	return (1);
 }
 
-int 	map_quest(int *fd, t_mprm *mprm)
+int		map_quest(int *fd, t_mprm *mprm)
 {
 	char	*str;
 	t_list	*tmp_map;
@@ -46,7 +46,7 @@ int 	map_quest(int *fd, t_mprm *mprm)
 	tmp_map = NULL;
 	str = NULL;
 	while (mprm->ok && chk_map_conf(mprm) != 8
-		  && get_next_line(*fd, &str) == 1 && prs_rout(mprm, str) != -1)
+	&& get_next_line(*fd, &str) == 1 && prs_rout(mprm, str) != -1)
 	{
 		free(str);
 		str = NULL;
@@ -54,15 +54,14 @@ int 	map_quest(int *fd, t_mprm *mprm)
 	if (mprm->ok
 	&& get_map(fd, mprm, &tmp_map) > 0
 	&& make_map(mprm, &tmp_map) > 0
-	&& valid_map(mprm) > 0
-	)
+	&& valid_map(mprm) > 0)
 		return (1);
 	free(str);
 	str = NULL;
 	return (red_flag(-1, mprm));
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	int			fd;
 	t_mprm		mprm;
@@ -72,7 +71,6 @@ int	main(int argc, char **argv)
 		argc = 2;
 		argv[1] = "/home/dmikhaylov/CLionProjects/cub3d/maps/map_2.cub";
 	}
-
 	if (argc == 2 || argc == 3)
 	{
 		cub_init(&mprm);

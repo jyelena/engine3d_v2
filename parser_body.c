@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 02:36:24 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 20:48:32 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 20:49:17 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		parse_pth(t_mprm *mprm, char **str, char mode, int len)
 	(*str)++;
 	if (*(*str) != 32 || get_chk(mprm, mode))
 		return (red_flag(-1, mprm));
-	while (*(*str)== 32)
+	while (*(*str) == 32)
 		(*str)++;
 	max_idx = trim_space_end(str);
 	if ((*str)[max_idx] != 'm' || (*str)[max_idx - 1] != 'p'

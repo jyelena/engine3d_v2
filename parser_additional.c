@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 18:15:21 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/19 22:50:18 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 21:11:33 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ int		chk_in_set(char c, int *flg)
 	return (0);
 }
 
-int		chk_map_conf(t_mprm	*mprm)
+int		chk_map_conf(t_mprm *mprm)
 {
-	return(mprm->chk.r + mprm->chk.f + mprm->chk.c + mprm->chk.no + mprm->chk.so
-	+ mprm->chk.we + mprm->chk.ea + mprm->chk.sp);
+	return (mprm->chk.r + mprm->chk.f + mprm->chk.c + mprm->chk.no
+	+ mprm->chk.so + mprm->chk.we + mprm->chk.ea + mprm->chk.sp);
 }
 
 int		fill_num(char **str, int size)
 {
 	int		i;
-	int 	res;
+	int		res;
 	char	num[10];
 
 	ft_bzero(num, size);
@@ -63,7 +63,7 @@ int		fill_num(char **str, int size)
 	return (res);
 }
 
-int 	trim_space_end(char **str)
+int		trim_space_end(char **str)
 {
 	int		i;
 	int		max_idx;
