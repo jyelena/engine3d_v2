@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 02:36:24 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 20:49:17 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 23:55:22 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ int		parse_pth(t_mprm *mprm, char **str, char mode, int len)
 
 	(*str)++;
 	if (*(*str) != 32 || get_chk(mprm, mode))
-		return (red_flag(-1, mprm));
+		return (red_flag(-13, mprm));
 	while (*(*str) == 32)
 		(*str)++;
 	max_idx = trim_space_end(str);
 	if ((*str)[max_idx] != 'm' || (*str)[max_idx - 1] != 'p'
 	|| (*str)[max_idx - 2] != 'x' || (*str)[max_idx - 3] != '.'
 	|| ft_isalnum((*str)[max_idx - 4]) == 0)
-		return (red_flag(-1, mprm));
+		return (red_flag(-13, mprm));
 	if ((fd = open(*str, O_RDONLY)) < 0)
-		return (red_flag(-1, mprm));
+		return (red_flag(-13, mprm));
 	close(fd);
-	return (red_flag(init_path(mprm, *str, mode, len), mprm));
+	return (init_path(mprm, *str, mode, len));
 }
 
 int		parse_clr(t_mprm *mprm, char **str, char mode, int *fl)
@@ -62,7 +62,7 @@ int		parse_clr(t_mprm *mprm, char **str, char mode, int *fl)
 	*fl = *fl - (*fl % 10);
 	*fl += 10;
 	if ((result = fill_num(str, 3)) < 0)
-		return (red_flag(-1, mprm));
+		return (red_flag(-11, mprm));
 	if (mode == 'F')
 	{
 		if (mprm->colors.floor_color.r < 0)
@@ -90,7 +90,7 @@ int		parse_resolut(t_mprm *mprm, char **line)
 
 	(*line)++;
 	if (*(*line) != 32 || get_chk(mprm, 'R'))
-		return (red_flag(-1, mprm));
+		return (red_flag(-12, mprm));
 	trim_space_end(line);
 	fl = 0;
 	while (*(*line))
@@ -106,9 +106,9 @@ int		parse_resolut(t_mprm *mprm, char **line)
 				mprm->resolution.y = fill_num(line, 10);
 		}
 		else
-			return (red_flag(-1, mprm));
+			return (red_flag(-12, mprm));
 	}
 	if (mprm->resolution.x < 1 || mprm->resolution.y < 1 || fl > 2)
-		return (red_flag(-1, mprm));
+		return (red_flag(-12, mprm));
 	return (1);
 }

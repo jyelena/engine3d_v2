@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 20:24:59 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 20:35:40 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/28 01:17:59 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,21 @@
 int		red_flag(int result, t_mprm *mprm)
 {
 	if (result < 0)
+	{
 		mprm->ok = 0;
+		if (result == -1)
+			wrt_err("Invalid params");
+		else if (result == -12)
+			wrt_err("Invalid resolution");
+		else if (result == -2)
+			wrt_err("Invalid map");
+		else if (result == -11)
+			wrt_err("Invalid color params");
+		else if (result == -13)
+			wrt_err("Invalid filename");
+		else
+			wrt_err("Error");
+	}
 	return (result);
 }
 
@@ -36,6 +50,7 @@ void	free_map_matrix(t_mprm *mprm)
 
 int		free_all(int result, t_mprm *mprm, t_list **list, char **str)
 {
+	red_flag(result, mprm);
 	if (str && *str && *(*str))
 		free(*str);
 	if (list && *list)

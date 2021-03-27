@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 21:17:20 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 21:20:54 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 23:36:42 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void				free_params(t_mprm *mprm);
 void				free_list(t_list **list);
 void				line_cpy(char *source, char **dest, t_mprm *mprm);
 void				free_map_matrix(t_mprm *mprm);
+void				wrt_err(char *text);
 int					free_all(int result, t_mprm *mprm, t_list **list,
 					char **str);
 int					make_map(t_mprm *mprm, t_list **tmp);

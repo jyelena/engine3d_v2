@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 02:08:55 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 21:16:27 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/28 01:21:01 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int		chk_on_top(int y, int x, t_mprm *mprm)
 {
 	if (!(mprm->map.mp[y - 1][x] == 32 || mprm->map.mp[y - 1][x] == 49
 	|| mprm->map.mp[y - 1][x] == 0))
-		return (-1);
+		return (-2);
 	if (x > 0 && !(mprm->map.mp[y - 1][x - 1] == 32
 	|| mprm->map.mp[y - 1][x - 1] == 49 || mprm->map.mp[y - 1][x - 1] == 0))
-		return (-1);
+		return (-2);
 	if (x < mprm->map.w - 1 && !(mprm->map.mp[y - 1][x + 1] == 32
 	|| mprm->map.mp[y - 1][x + 1] == 49 || mprm->map.mp[y - 1][x + 1] == 0))
-		return (-1);
+		return (-2);
 	return (1);
 }
 
@@ -30,13 +30,13 @@ int		chk_on_bottom(int y, int x, t_mprm *mprm)
 {
 	if (!(mprm->map.mp[y + 1][x] == 32 || mprm->map.mp[y + 1][x] == 49
 	|| mprm->map.mp[y + 1][x] == 0))
-		return (-1);
+		return (-2);
 	if (x > 0 && !(mprm->map.mp[y + 1][x - 1] == 32
 	|| mprm->map.mp[y + 1][x - 1] == 49 || mprm->map.mp[y + 1][x - 1] == 0))
-		return (-1);
+		return (-2);
 	if (x < mprm->map.w - 1 && !(mprm->map.mp[y + 1][x + 1] == 32
 	|| mprm->map.mp[y + 1][x + 1] == 49 || mprm->map.mp[y + 1][x + 1] == 0))
-		return (-1);
+		return (-2);
 	return (1);
 }
 
@@ -44,13 +44,13 @@ int		chk_round(int y, int x, t_mprm *mprm)
 {
 	if ((y > 0 && chk_on_top(y, x, mprm) < 0)
 	|| (y < mprm->map.d - 1 && chk_on_bottom(y, x, mprm) < 0))
-		return (-1);
+		return (-2);
 	if (x > 0 && !(mprm->map.mp[y][x - 1] == 32 || mprm->map.mp[y][x - 1] == 49
 	|| mprm->map.mp[y][x - 1] == 0))
-		return (-1);
+		return (-2);
 	if (x < mprm->map.w - 1 && !(mprm->map.mp[y][x + 1] == 32
 	|| mprm->map.mp[y][x + 1] == 49 || mprm->map.mp[y][x + 1] == 0))
-		return (-1);
+		return (-2);
 	return (1);
 }
 
@@ -68,7 +68,7 @@ int		valid_map(t_mprm *mprm)
 			if (mprm->map.mp[y][x] == ' ')
 			{
 				if (chk_round(y, x, mprm) < 0)
-					return (red_flag(-1, mprm));
+					return (red_flag(-2, mprm));
 			}
 			x++;
 		}

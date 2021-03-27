@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 18:41:43 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 19:02:09 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 23:36:47 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,21 @@ int		get_chk(t_mprm *mprm, char mode)
 int		set_chk(int result, t_mprm *mprm, char mode)
 {
 	if (mode == 'N')
-		mprm->chk.no = red_flag(result, mprm);
+		mprm->chk.no = result;
 	else if (mode == 'W')
-		mprm->chk.we = red_flag(result, mprm);
+		mprm->chk.we = result;
 	else if (mode == 'E')
-		mprm->chk.ea = red_flag(result, mprm);
+		mprm->chk.ea = result;
 	else if (mode == 'O')
-		mprm->chk.so = red_flag(result, mprm);
+		mprm->chk.so = result;
 	else if (mode == 32)
-		mprm->chk.sp = red_flag(result, mprm);
+		mprm->chk.sp = result;
 	else if (mode == 'F')
-		mprm->chk.f = red_flag(result, mprm);
+		mprm->chk.f = result;
 	else if (mode == 'C')
-		mprm->chk.c = red_flag(result, mprm);
+		mprm->chk.c = result;
 	else if (mode == 'R')
-		mprm->chk.r = red_flag(result, mprm);
+		mprm->chk.r = result;
 	return (result);
 }
 
@@ -60,7 +60,7 @@ int		parse_clr_rout(t_mprm *mprm, char **str, char mode)
 
 	(*str)++;
 	if (*(*str) != 32 || get_chk(mprm, mode))
-		return (red_flag(-1, mprm));
+		return (red_flag(-11, mprm));
 	trim_space_end(str);
 	fl = 0;
 	while (*(*str))
@@ -75,9 +75,9 @@ int		parse_clr_rout(t_mprm *mprm, char **str, char mode)
 		else if (*(*str) >= '0' && *(*str) <= '9')
 			parse_clr(mprm, str, mode, &fl);
 		else
-			return (red_flag(-1, mprm));
+			return (red_flag(-11, mprm));
 		if (fl > 30 || fl == 1 || fl % 10 > 1)
-			return (red_flag(-1, mprm));
+			return (red_flag(-11, mprm));
 	}
 	return (1);
 }
@@ -97,7 +97,7 @@ int		parse_pth_rout(t_mprm *mprm, char **str, int len)
 		return (red_flag(-1, mprm));
 	if (mode == 'N' || mode == 'W' || mode == 'E')
 		(*str)++;
-	return (red_flag(parse_pth(mprm, str, mode, len), mprm));
+	return (parse_pth(mprm, str, mode, len));
 }
 
 int		prs_rout(t_mprm *mprm, char *line)

@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 18:28:34 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 21:05:51 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/28 01:15:41 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int		get_map(int *fd, t_mprm *mprm, t_list **tmp)
 
 	fl = 0;
 	while (get_next_line(*fd, &str))
-		if (prs_map_rout(mprm, &str, &fl, tmp) == -1 || fl == 10 || fl == 2)
-			return (free_all(-1, mprm, tmp, &str));
-	if (prs_map_rout(mprm, &str, &fl, tmp) == -1 || fl == 10 || fl == 2)
-		return (free_all(-1, mprm, tmp, &str));
+		if (prs_map_rout(mprm, &str, &fl, tmp) < 0 || fl == 10 || fl == 2)
+			return (free_all(-2, mprm, tmp, &str));
+	if (prs_map_rout(mprm, &str, &fl, tmp) < 0 || fl == 10 || fl == 2)
+		return (free_all(-2, mprm, tmp, &str));
 	mprm->map.d += 2;
 	mprm->map.w += 2;
 	fl = 0;
 	if (mprm->ok && !(mprm->map.mp = ft_calloc(mprm->map.d + 1, sizeof(char*))))
-		return (free_all(-1, mprm, tmp, &str));
+		return (free_all(-2, mprm, tmp, &str));
 	while (fl < mprm->map.d)
 	{
 		if (!(mprm->map.mp[fl] = ft_calloc(mprm->map.w + 1, sizeof(char))))
@@ -46,7 +46,7 @@ int		map_quest(int *fd, t_mprm *mprm)
 	tmp_map = NULL;
 	str = NULL;
 	while (mprm->ok && chk_map_conf(mprm) != 8
-	&& get_next_line(*fd, &str) == 1 && prs_rout(mprm, str) != -1)
+	&& get_next_line(*fd, &str) == 1 && prs_rout(mprm, str) > -1)
 	{
 		free(str);
 		str = NULL;
@@ -58,7 +58,7 @@ int		map_quest(int *fd, t_mprm *mprm)
 		return (1);
 	free(str);
 	str = NULL;
-	return (red_flag(-1, mprm));
+	return (-1);
 }
 
 int		main(int argc, char **argv)
@@ -75,7 +75,12 @@ int		main(int argc, char **argv)
 	{
 		cub_init(&mprm);
 		if ((fd = open(argv[1], O_RDONLY)) >= 0)
-			map_quest(&fd, &mprm);
+		{
+			if (map_quest(&fd, &mprm) > 0)
+				printf("map ok\n");
+			else
+				printf("map nok\n");
+		}
 	}
 	else
 	{
