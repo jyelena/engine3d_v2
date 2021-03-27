@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 11:30:57 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 23:36:42 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/27 23:36:47 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ void	cub_init(t_mprm *mprm)
 void	wrt_err(char *text)
 {
 	while (*text)
-		write (1, text++, 1);
-	write (1, "\n", 1);
+		write(1, text++, 1);
+	write(1, "\n", 1);
 }
