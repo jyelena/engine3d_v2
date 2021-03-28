@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 18:15:21 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/27 21:11:33 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/03/29 01:05:31 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,21 @@ int		fill_num(char **str, int size)
 	int		i;
 	int		res;
 	char	num[10];
+	int		fl;
 
+	fl = 0;
 	ft_bzero(num, size);
 	i = 0;
 	while (*(*str) >= '0' && *(*str) <= '9' && i < size)
 	{
-		num[i] = *(*str);
+		if (*(*str) != 48 || !(*(*str + 1)))
+			fl = 1;
+		if (fl > 0)
+		{
+			num[i] = *(*str);
+			i++;
+		}
 		(*str)++;
-		i++;
 	}
 	res = ft_atoi(num);
 	if ((size == 10 && res < 1) || (size == 3 && (res < 0 || res > 255)))
