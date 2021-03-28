@@ -52,7 +52,10 @@ int		free_all(int result, t_mprm *mprm, t_list **list, char **str)
 {
 	red_flag(result, mprm);
 	if (str && *str && *(*str))
+	{
 		free(*str);
+		*str = NULL;
+	}
 	if (list && *list)
 		free_list(list);
 	if (mprm->map.mp)
