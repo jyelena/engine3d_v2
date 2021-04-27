@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 18:28:34 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/28 01:15:41 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/04/02 03:30:05 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,19 @@ int		get_map(int *fd, t_mprm *mprm, t_list **tmp)
 	fl = 0;
 	while (get_next_line(*fd, &str))
 		if (prs_map_rout(mprm, &str, &fl, tmp) < 0 || fl == 10 || fl == 2)
-			return (free_all(-2, mprm, tmp, &str));
-	if (prs_map_rout(mprm, &str, &fl, tmp) < 0 || fl == 10 || fl == 2)
-		return (free_all(-2, mprm, tmp, &str));
+			return (free_all(-2, mprm, tmp));
+	if (prs_map_rout(mprm, &str, &fl, tmp) < 0 || fl == 10 || fl == 1
+	|| fl == 0)
+		return (free_all(-2, mprm, tmp));
 	mprm->map.d += 2;
 	mprm->map.w += 2;
 	fl = 0;
 	if (mprm->ok && !(mprm->map.mp = ft_calloc(mprm->map.d + 1, sizeof(char*))))
-		return (free_all(-2, mprm, tmp, &str));
+		return (free_all(-2, mprm, tmp));
 	while (fl < mprm->map.d)
 	{
 		if (!(mprm->map.mp[fl] = ft_calloc(mprm->map.w + 1, sizeof(char))))
-			return (free_all(-1, mprm, tmp, &str));
+			return (free_all(-1, mprm, tmp));
 		fl++;
 	}
 	mprm->map.mp[fl] = NULL;
@@ -87,7 +88,7 @@ int		main(int argc, char **argv)
 		write(1, NO_MAP_ERROR, sizeof(NO_MAP_ERROR));
 	}
 	free_params(&mprm);
-	if (mprm.map.mp)
+	if (mprm.map.mp && *(mprm.map.mp))
 		free_map_matrix(&mprm);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 20:24:59 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/03/28 01:17:59 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/04/02 03:33:43 by dmikhaylov       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int		red_flag(int result, t_mprm *mprm)
 		mprm->ok = 0;
 		if (result == -1)
 			wrt_err("Invalid params");
+		if (result == -3)
+			wrt_err("Map not found");
 		else if (result == -12)
 			wrt_err("Invalid resolution");
 		else if (result == -2)
@@ -48,17 +50,12 @@ void	free_map_matrix(t_mprm *mprm)
 		free(mprm->map.mp);
 }
 
-int		free_all(int result, t_mprm *mprm, t_list **list, char **str)
+int		free_all(int result, t_mprm *mprm, t_list **list)
 {
 	red_flag(result, mprm);
-	if (str && *str && *(*str))
-	{
-		free(*str);
-		*str = NULL;
-	}
 	if (list && *list)
 		free_list(list);
-	if (mprm->map.mp)
+	if (mprm->map.mp && *(mprm->map.mp))
 		free_map_matrix(mprm);
 	if (result < 0)
 		mprm->ok = 0;
@@ -77,12 +74,18 @@ void	free_list(t_list **list)
 		{
 			tempor = current->next;
 			if (current->content)
+			{
 				free(current->content);
+				current->content = NULL;
+			}
 			free(current);
 			current = tempor;
 		}
 		if (current->content)
+		{
 			free(current->content);
+			current->content = NULL;
+		}
 		free(current);
 	}
 }

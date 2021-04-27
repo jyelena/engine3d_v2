@@ -25,6 +25,7 @@ void	cub_init(t_mprm *mprm)
 	mprm->chk.we = 0;
 	mprm->chk.ea = 0;
 	mprm->chk.sp = 0;
+	mprm->map.spr_sum = 0;
 	mprm->resolution.x = -1;
 	mprm->resolution.y = -1;
 	mprm->colors.cell_color.r = -1;

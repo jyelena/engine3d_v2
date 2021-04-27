@@ -51,6 +51,13 @@ int		chk_round(int y, int x, t_mprm *mprm)
 	if (x < mprm->map.w - 1 && !(mprm->map.mp[y][x + 1] == 32
 	|| mprm->map.mp[y][x + 1] == 49 || mprm->map.mp[y][x + 1] == 0))
 		return (-2);
+	if (mprm->map.mp[y][x] == 'N' || mprm->map.mp[y][x] == 'S'
+	|| mprm->map.mp[y][x] == 'W' || mprm->map.mp[y][x] == 'E')
+	{
+		mprm->player.x = x;
+		mprm->player.y = y;
+		mprm->player.dir = mprm->map.mp[y][x];
+	}
 	return (1);
 }
 
