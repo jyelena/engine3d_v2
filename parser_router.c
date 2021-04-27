@@ -102,24 +102,27 @@ int		parse_pth_rout(t_mprm *mprm, char **str, int len)
 
 int		prs_rout(t_mprm *mprm, char *line)
 {
-	int	len;
+	int		len;
+	char	mode;
 
 	len = trim_space(&line);
 	if (ft_strlen(line) == 1)
 		return (red_flag(-1, mprm));
 	while (*line == 32)
 		line++;
+	mode = *line;
 	if (*line == 'R')
-		return (set_chk(parse_resolut(mprm, &line), mprm, *line));
+		return (set_chk(parse_resolut(mprm, &line), mprm, mode));
 	else if (*line == 'F' || *line == 'C')
-		return (set_chk(parse_clr_rout(mprm, &line, *line), mprm, *line));
+		return (set_chk(parse_clr_rout(mprm, &line, *line), mprm, mode));
 	else if (*line == 'N' || *line == 'W' || *line == 'E')
-		return (set_chk(parse_pth_rout(mprm, &line, len), mprm, *line));
+		return (set_chk(parse_pth_rout(mprm, &line, len), mprm, mode));
 	else if (*line == 'S')
 	{
 		line++;
+		mode = *line;
 		if (*line == 'O' || *line == 32)
-			return (set_chk(parse_pth_rout(mprm, &line, len), mprm, *line));
+			return (set_chk(parse_pth_rout(mprm, &line, len), mprm, mode));
 	}
 	else if (!*line)
 		return (0);

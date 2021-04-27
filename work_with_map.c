@@ -54,9 +54,10 @@ int		chk_round(int y, int x, t_mprm *mprm)
 	if (mprm->map.mp[y][x] == 'N' || mprm->map.mp[y][x] == 'S'
 	|| mprm->map.mp[y][x] == 'W' || mprm->map.mp[y][x] == 'E')
 	{
-		mprm->player.x = x;
-		mprm->player.y = y;
-		mprm->player.dir = mprm->map.mp[y][x];
+		mprm->plr.posX = x;
+		mprm->plr.posY = y;
+		mprm->plr.dir = mprm->map.mp[y][x];
+		player_dir(mprm);
 	}
 	return (1);
 }

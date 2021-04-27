@@ -12,23 +12,23 @@
 
 #include "cub3d.h"
 
-void	fill_sprites_struct(char **map, t_spr **spr_arr)
+void	fill_sprites_struct(t_mprm *mprm)
 {
 	int	x;
 	int	y;
 	int	z;
 
 	z = 0;
-	x = 0;
+	y = 0;
 	while (mprm->map.mp[y])
 	{
-		y = 0;
+		x = 0;
 		while (mprm->map.mp[y][x])
 		{
 			if (mprm->map.mp[y][x] == '2')
 			{
-				(*spr_arr)[z].x = x + 0.5;
-				(*spr_arr)[z].y = y + 0.5;
+				(mprm->spr)[z].x = x + 0.5;
+				(mprm->spr)[z].y = y + 0.5;
 				z++;
 			}
 			x++;
