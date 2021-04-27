@@ -47,7 +47,8 @@ int		map_quest(int *fd, t_mprm *mprm)
 	tmp_map = NULL;
 	str = NULL;
 	while (mprm->ok && chk_map_conf(mprm) != 8
-	&& get_next_line(*fd, &str) == 1 && prs_rout(mprm, str) > -1)
+	&& get_next_line(*fd, &str) == 1
+	&& prs_rout(mprm, str) > -1)
 	{
 		free(str);
 		str = NULL;
@@ -70,23 +71,25 @@ int		main(int argc, char **argv)
 	if (argc == 1)
 	{
 		argc = 2;
-		argv[1] = "/home/dmikhaylov/CLionProjects/cub3d/maps/map_2.cub";
+		argv[1] = "/Users/jyelena/cub3d/maps/map_3.cub";
 	}
+
 	if (argc == 2 || argc == 3)
 	{
 		cub_init(&mprm);
 		if ((fd = open(argv[1], O_RDONLY)) >= 0)
 		{
 			if (map_quest(&fd, &mprm) > 0)
+			{
 				printf("map ok\n");
+				draw_init(&mprm);
+			}
 			else
 				printf("map nok\n");
 		}
 	}
 	else
-	{
 		write(1, NO_MAP_ERROR, sizeof(NO_MAP_ERROR));
-	}
 	free_params(&mprm);
 	if (mprm.map.mp && *(mprm.map.mp))
 		free_map_matrix(&mprm);

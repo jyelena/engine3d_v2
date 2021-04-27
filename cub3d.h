@@ -21,6 +21,7 @@
 # include <math.h>
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
+# include "mlx/mlx.h"
 
 # define NO_MAP_ERROR "Need map file as argument!\n"
 # define W mprm->resolution.x
@@ -53,16 +54,16 @@ typedef struct		s_spr
 	double			dist;
 }					t_spr;
 
-typedef struct 		s_player
+typedef struct 		s_plr
 {
-	double 			x;
-	double 			y;
+	double 			posX;
+	double 			posY;
 	double 			dirX;
 	double 			dirY;
 	double 			planeX;
 	double 			planeY;
 	char 			dir;
-}					t_player;
+}					t_plr;
 
 typedef struct		s_ray
 {
@@ -153,9 +154,10 @@ typedef struct		s_mprms {
 	t_paths			paths;
 	t_chkprm		chk;
 	t_map			map;
-	t_player		player;
+	t_plr			plr;
 	t_spr			*spr;
 	t_ray			ray;
+	t_data			data;
 	int				ok;
 }					t_mprm;
 
@@ -166,7 +168,9 @@ void				line_cpy(char *source, char **dest, t_mprm *mprm);
 void				free_map_matrix(t_mprm *mprm);
 void				wrt_err(char *text);
 void				player_dir(t_mprm *mprm);
-void				fill_sprites_struct(char **map, t_spr **spr_arr);
+void				fill_sprites_struct(t_mprm *mprm);
+void				draw_init(t_mprm *mprm);
+void				draw_magic(t_mprm *mprm);
 int					free_all(int result, t_mprm *mprm, t_list **list);
 int					make_map(t_mprm *mprm, t_list **tmp);
 int					red_flag(int result, t_mprm *mprm);
