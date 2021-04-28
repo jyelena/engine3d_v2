@@ -14,11 +14,12 @@
 
 void	fill_sprites_struct(t_mprm *mprm)
 {
-	int	x;
-	int	y;
-	int	z;
+	int		x;
+	int		y;
+	int 	z;
 
-	z = 0;
+	if (!(mprm->spr = (t_spr *)malloc(sizeof(t_spr) * mprm->scount)))
+		return ;
 	y = 0;
 	while (mprm->map.mp[y])
 	{
