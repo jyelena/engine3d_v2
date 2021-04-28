@@ -42,6 +42,7 @@ int		chk_on_bottom(int y, int x, t_mprm *mprm)
 
 int		chk_round(int y, int x, t_mprm *mprm)
 {
+//	printf("y: %d, x: %d, %c\n", y, x, mprm->map.mp[y][x]);
 	if ((y > 0 && chk_on_top(y, x, mprm) < 0)
 	|| (y < mprm->map.d - 1 && chk_on_bottom(y, x, mprm) < 0))
 		return (-2);
@@ -51,14 +52,6 @@ int		chk_round(int y, int x, t_mprm *mprm)
 	if (x < mprm->map.w - 1 && !(mprm->map.mp[y][x + 1] == 32
 	|| mprm->map.mp[y][x + 1] == 49 || mprm->map.mp[y][x + 1] == 0))
 		return (-2);
-	if (mprm->map.mp[y][x] == 'N' || mprm->map.mp[y][x] == 'S'
-	|| mprm->map.mp[y][x] == 'W' || mprm->map.mp[y][x] == 'E')
-	{
-		mprm->plr.posX = x;
-		mprm->plr.posY = y;
-		mprm->plr.dir = mprm->map.mp[y][x];
-		player_dir(mprm);
-	}
 	return (1);
 }
 
@@ -78,10 +71,16 @@ int		valid_map(t_mprm *mprm)
 				if (chk_round(y, x, mprm) < 0)
 					return (red_flag(-2, mprm));
 			}
+			if (mprm->map.mp[y][x] == 'N' || mprm->map.mp[y][x] == 'S'
+			|| mprm->map.mp[y][x] == 'W' || mprm->map.mp[y][x] == 'E')
+			{
+				player_position(x, y, mprm);
+			}
 			x++;
 		}
 		y++;
 	}
+	fill_sprites_struct(mprm);
 	return (1);
 }
 
@@ -101,12 +100,10 @@ int		make_map(t_mprm *mprm, t_list **tmp_map)
 			line_cpy(tmp->content, &mprm->map.mp[d], mprm);
 			tmp = tmp->next;
 		}
-		printf("|%s|\n", mprm->map.mp[d]);
 		d++;
 	}
 	mprm->map.mp[d] = (char *)ft_memset((void *)mprm->map.mp[d], 32,
 	mprm->map.w);
-	printf("|%s|\n", mprm->map.mp[d]);
 	free_list(tmp_map);
 	return (1);
 }

@@ -35,10 +35,11 @@ int		prs_map_rout(t_mprm *mprm, char **str, int *flg, t_list **tmp)
 
 	i = 0;
 	len = ft_strlen(*str);
-	if (len == 0 && !*flg)
+	if (len == 0)
 	{
 		free(*str);
 		*str = NULL;
+		return (-2);
 	}
 	ft_lstadd_back(tmp, ft_lstnew(*str));
 	while (len > 0 && (*str)[i])
@@ -46,7 +47,7 @@ int		prs_map_rout(t_mprm *mprm, char **str, int *flg, t_list **tmp)
 		if ((*str)[i] != 32 && !chk_in_set((*str)[i], flg))
 			return (-2);
 		if ((*str)[i] == '2')
-			mprm->map.spr_sum++;
+			mprm->scount++;
 		i++;
 	}
 	mprm->map.d++;
