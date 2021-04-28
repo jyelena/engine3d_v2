@@ -29,12 +29,44 @@
 
 # define MAP mprm.map.mp
 # define PMAP mprm->map.mp
-# define screenWidth 640
-# define screenHeight 480
 # define texWidth 64
 # define texHeight 64
-# define mapWidth 24
-# define mapHeight 24
+
+typedef struct		s_move
+{
+	short			up;
+	short			down;
+	short			turn_left;
+	short			turn_right;
+	short			strafe_left;
+	short			strafe_right;
+	short			exit;
+}					t_move;
+
+typedef struct		s_img
+{
+	void			*img;
+	void			*addr;
+	int				bpp;
+	int				linelen;
+	int				endian;
+}					t_img;
+
+typedef struct		s_tex
+{
+	t_img			timg;
+	int				w;
+	int				h;
+}					t_tex;
+
+typedef struct		s_alltex
+{
+	t_tex			no;
+	t_tex			so;
+	t_tex			ea;
+	t_tex			we;
+	t_tex			sp;
+}					t_alltex;
 
 typedef struct		s_data
 {
@@ -67,42 +99,41 @@ typedef struct 		s_plr
 
 typedef struct		s_ray
 {
-	double			cameraX; // = 2 * x / (double)w - 1; //x-coordinate in camera space
-	double			rayDirX; // = dirX + planeX*cameraX;
-	double			rayDirY; // = dirY + planeY*cameraX;
-	int				mapX; // = int(posX);
-	int				mapY; // = int(posY);
+	double			cameraX;
+	double			rayDirX;
+	double			rayDirY;
+	int				mapX;
+	int				mapY;
 	double			sideDistX;
 	double			sideDistY;
-	double			deltaDistX; // = std::abs(1 / rayDirX);
-	double			deltaDistY; // = std::abs(1 / rayDirY);
+	double			deltaDistX;
+	double			deltaDistY;
 	double			perpWallDist;
 	int				stepX;
 	int				stepY;
-	int				color;
-	int				hit; // = 0; //was there a wall hit?
-	int				side; //was a NS or a EW wall hit?
-	int				lineHeight; // = (int)(h / perpWallDist);
-	int				drawStart; // = -lineHeight / 2 + h / 2;
-	int				drawEnd; // = lineHeight / 2 + h / 2;
-	int				texNum; // = worldMap[mapX][mapY] - 1; //1 subtracted from it so that texture 0 can be used!
-	double			wallX; // where exactly the wall was hit
-	int				texX; // = int(wallX * double(texWidth));
-	double			step; // = 1.0 * texHeight / lineHeight;
-	double			texPos; // = (drawStart - h / 2 + lineHeight / 2) * step;
-	int				texY; // = (int)texPos & (texHeight - 1);
-	double			frameTime; //= (time - oldTime) / 1000.0; //frametime is the time this frame has taken, in seconds
-	double			moveSpeed; // = frameTime * 5.0; //the constant value is in squares/second
-	double			rotSpeed; // = frameTime * 3.0; //the constant value is in radians/second
-	double			oldDirX; // = dirX;
-	double			oldPlaneX; // = planeX;
+	unsigned int 	*color;
+	int				hit;
+	int				side;
+	int				lineHeight;
+	int				drawStart;
+	int				drawEnd;
+	int				texNum;
+	double			wallX;
+	int				texX;
+	double			step;
+	double			texPos;
+	int				texY;
+	double			frameTime;
+	double			moveSpeed;
+	double			rotSpeed;
+	double			oldDirX;
+	double			oldPlaneX;
 }					t_ray;
 
 typedef struct		s_map
 {
 	int				w;
 	int				d;
-	int 			spr_sum;
 	char			**mp;
 }					t_map;
 
@@ -127,12 +158,14 @@ typedef struct		s_fcolor {
 	int				r;
 	int				g;
 	int				b;
+	unsigned int 	rgb;
 }					t_fcolor;
 
 typedef struct		s_ccolor {
 	int				r;
 	int				g;
 	int				b;
+	unsigned int 	rgb;
 }					t_ccolor;
 
 typedef struct		s_colors {
@@ -158,6 +191,9 @@ typedef struct		s_mprms {
 	t_spr			*spr;
 	t_ray			ray;
 	t_data			data;
+	t_move			mov;
+	t_alltex		tex;
+	int 			scount;
 	int				ok;
 }					t_mprm;
 
@@ -168,9 +204,19 @@ void				line_cpy(char *source, char **dest, t_mprm *mprm);
 void				free_map_matrix(t_mprm *mprm);
 void				wrt_err(char *text);
 void				player_dir(t_mprm *mprm);
+void				player_plane(t_mprm *mprm);
+void				player_position(int x, int y, t_mprm *mprm);
 void				fill_sprites_struct(t_mprm *mprm);
 void				draw_init(t_mprm *mprm);
 void				draw_magic(t_mprm *mprm);
+void				get_color(t_mprm *mprm);
+void				draw_f_c(t_mprm *mprm);
+void				take_textures(t_mprm *mprm);
+void				take_tex_addr(t_mprm *mprm);
+int					create_rgb(int r, int g, int b);
+int					key_press(int key, t_mprm *mprm);
+int					key_release(int key, t_mprm *mprm);
+int					moving(t_mprm *mprm);
 int					free_all(int result, t_mprm *mprm, t_list **list);
 int					make_map(t_mprm *mprm, t_list **tmp);
 int					red_flag(int result, t_mprm *mprm);
@@ -187,5 +233,6 @@ int					parse_pth(t_mprm *mprm, char **str, char mode, int len);
 int					fill_num(char **str, int size);
 int					get_chk(t_mprm *mprm, char mode);
 int					chk_map_conf(t_mprm	*mprm);
+unsigned int		*take_pixel(t_tex tex, int x, int y);
 
 #endif

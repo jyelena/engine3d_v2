@@ -57,7 +57,10 @@ int		map_quest(int *fd, t_mprm *mprm)
 	&& get_map(fd, mprm, &tmp_map) > 0
 	&& make_map(mprm, &tmp_map) > 0
 	&& valid_map(mprm) > 0)
+	{
+		get_color(mprm);
 		return (1);
+	}
 	free(str);
 	str = NULL;
 	return (-1);
@@ -68,12 +71,6 @@ int		main(int argc, char **argv)
 	int			fd;
 	t_mprm		mprm;
 
-	if (argc == 1)
-	{
-		argc = 2;
-		argv[1] = "/Users/jyelena/cub3d/maps/map_3.cub";
-	}
-
 	if (argc == 2 || argc == 3)
 	{
 		cub_init(&mprm);
@@ -81,11 +78,8 @@ int		main(int argc, char **argv)
 		{
 			if (map_quest(&fd, &mprm) > 0)
 			{
-				printf("map ok\n");
 				draw_init(&mprm);
 			}
-			else
-				printf("map nok\n");
 		}
 	}
 	else

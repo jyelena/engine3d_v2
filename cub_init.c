@@ -12,9 +12,21 @@
 
 #include "cub3d.h"
 
+void	move_init(t_mprm *mprm)
+{
+	mprm->mov.up = 0;
+	mprm->mov.down = 0;
+	mprm->mov.turn_left = 0;
+	mprm->mov.turn_right = 0;
+	mprm->mov.strafe_left = 0;
+	mprm->mov.strafe_right = 0;
+	mprm->mov.exit = 0;
+}
+
 void	cub_init(t_mprm *mprm)
 {
 	mprm->ok = 1;
+	mprm->scount = 0;
 	mprm->map.w = 0;
 	mprm->map.d = 0;
 	mprm->chk.r = 0;
@@ -25,7 +37,6 @@ void	cub_init(t_mprm *mprm)
 	mprm->chk.we = 0;
 	mprm->chk.ea = 0;
 	mprm->chk.sp = 0;
-	mprm->map.spr_sum = 0;
 	mprm->resolution.x = -1;
 	mprm->resolution.y = -1;
 	mprm->colors.cell_color.r = -1;
@@ -34,6 +45,7 @@ void	cub_init(t_mprm *mprm)
 	mprm->colors.floor_color.r = -1;
 	mprm->colors.floor_color.g = -1;
 	mprm->colors.floor_color.b = -1;
+	move_init(mprm);
 }
 
 void	wrt_err(char *text)
