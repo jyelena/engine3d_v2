@@ -37,10 +37,10 @@ int		chk_in_set(char c, int *flg)
 	return (0);
 }
 
-int		chk_map_conf(t_mprm *mprm)
+int		chk_map_conf(t_game *game)
 {
-	return (mprm->chk.r + mprm->chk.f + mprm->chk.c + mprm->chk.no
-	+ mprm->chk.so + mprm->chk.we + mprm->chk.ea + mprm->chk.sp);
+	return (game->chk.r + game->chk.f + game->chk.c + game->chk.no
+	+ game->chk.so + game->chk.we + game->chk.ea + game->chk.sp);
 }
 
 int		fill_num(char **str, int size)

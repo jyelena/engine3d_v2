@@ -12,12 +12,12 @@
 
 #include "cub3d.h"
 
-void	line_cpy(char *source, char **dest, t_mprm *mprm)
+void	line_cpy(char *source, char **dest, t_game *game)
 {
 	int	i;
 
 	i = 0;
-	while (source && *source && i <= mprm->map.w - 1)
+	while (source && *source && i <= game->map.w - 1)
 	{
 		if (i > 0)
 		{
@@ -28,7 +28,7 @@ void	line_cpy(char *source, char **dest, t_mprm *mprm)
 	}
 }
 
-int		prs_map_rout(t_mprm *mprm, char **str, int *flg, t_list **tmp)
+int		prs_map_rout(t_game *game, char **str, int *flg, t_list **tmp)
 {
 	int		len;
 	int		i;
@@ -47,12 +47,12 @@ int		prs_map_rout(t_mprm *mprm, char **str, int *flg, t_list **tmp)
 		if ((*str)[i] != 32 && !chk_in_set((*str)[i], flg))
 			return (-2);
 		if ((*str)[i] == '2')
-			mprm->scount++;
+			game->scount++;
 		i++;
 	}
-	mprm->map.d++;
+	game->map.d++;
 	if (*flg > 0)
-		if (len > mprm->map.w)
-			mprm->map.w = len;
+		if (len > game->map.w)
+			game->map.w = len;
 	return (1);
 }

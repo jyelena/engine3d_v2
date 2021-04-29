@@ -1,124 +1,88 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   moving.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jyelena <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/28 19:31:25 by jyelena           #+#    #+#             */
+/*   Updated: 2021/04/28 19:31:26 by jyelena          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int		moving(t_mprm *mprm)
+void	move_up(t_game *game, double move_speed)
 {
-	double	moveSpeed;
+	if (PMAP[(int)(game->plr.pos_y)]
+	[(int)(game->plr.pos_x + game->plr.dir_x * move_speed * 1.3)] != '1')
+		game->plr.pos_x += game->plr.dir_x * move_speed;
+	if (PMAP[(int)(game->plr.pos_y + game->plr.dir_y * move_speed * 1.3)]
+	[(int)(game->plr.pos_x)] != '1')
+		game->plr.pos_y += game->plr.dir_y * move_speed;
+}
 
-	moveSpeed = 0.05;
-    if (mprm->mov.up)
-    {
-      if(PMAP[(int)(mprm->plr.posY)][(int)(mprm->plr.posX + mprm->plr.dirX * moveSpeed * 1.3)]
-      != '1')
-      	mprm->plr.posX += mprm->plr.dirX * moveSpeed;
-      if(PMAP[(int)(mprm->plr.posY + mprm->plr.dirY * moveSpeed * 1.3)][(int)(mprm->plr.posX)]
-      != '1')
-      	mprm->plr.posY += mprm->plr.dirY * moveSpeed;
-    }
-    //move backwards if no wall behind you
-    if (mprm->mov.down)
-    {
-      if(PMAP[(int)(mprm->plr.posY)][(int)(mprm->plr.posX - mprm->plr.dirX * moveSpeed * 1.3)]
-      != '1')
-      	mprm->plr.posX -= mprm->plr.dirX * moveSpeed;
-      if(PMAP[(int)(mprm->plr.posY - mprm->plr.dirY * moveSpeed * 1.3)][(int)
-      (mprm->plr.posX)]
-      != '1')
-      	mprm->plr.posY -= mprm->plr.dirY * moveSpeed;
-    }
-    //rotate to the right
-    if (mprm->mov.turn_right)
-    {
-      //both camera direction and camera mprm->plr.plane must be rotated
-      double oldDirX = mprm->plr.dirX;
-      mprm->plr.dirX = mprm->plr.dirX * cos(-moveSpeed) - mprm->plr.dirY * sin
-      		(-moveSpeed);
-      mprm->plr.dirY = oldDirX * sin(-moveSpeed) + mprm->plr.dirY * cos
-      		(-moveSpeed);
-      double oldPlaneX = mprm->plr.planeX;
-      mprm->plr.planeX = mprm->plr.planeX * cos(-moveSpeed) - mprm->plr.planeY *
-      		sin
-      		(-moveSpeed);
-      mprm->plr.planeY = oldPlaneX * sin(-moveSpeed) + mprm->plr.planeY * cos
-      		(-moveSpeed);
-    }
-    //rotate to the left
-    if (mprm->mov.turn_left)
-    {
-      //both camera direction and camera mprm->plr.plane must be rotated
-      double oldDirX = mprm->plr.dirX;
-      mprm->plr.dirX = mprm->plr.dirX * cos(moveSpeed) - mprm->plr.dirY * sin
-      		(moveSpeed);
-      mprm->plr.dirY = oldDirX * sin(moveSpeed) + mprm->plr.dirY * cos
-      		(moveSpeed);
-      double oldPlaneX = mprm->plr.planeX;
-      mprm->plr.planeX = mprm->plr.planeX * cos(moveSpeed) - mprm->plr.planeY *
-      		sin
-      		(moveSpeed);
-      mprm->plr.planeY = oldPlaneX * sin(moveSpeed) + mprm->plr.planeY * cos
-      		(moveSpeed);
-	}
-	if (mprm->mov.strafe_right)
-	{
-		if (mprm->map.mp[(int)(mprm->plr.posY)][(int)(mprm->plr.posX - mprm->plr.dirY *
-			(moveSpeed * 1.3))] != '1' &&
-			mprm->map.mp[(int)(mprm->plr.posY)][(int)(mprm->plr.posX - mprm->plr.dirY *
-			(moveSpeed * 1.3))] != '2')
-			mprm->plr.posX -= mprm->plr.dirY * moveSpeed;
-		if (mprm->map.mp[(int)(mprm->plr.posY + mprm->plr.dirX * (moveSpeed * 1.3))][(int)(mprm->plr.posX)]
-			 != '1' &&
-			mprm->map.mp[(int)(mprm->plr.posY + mprm->plr.dirX * (moveSpeed * 1.3))][(int)(mprm->plr.posX)]
-			 != '2')
-			mprm->plr.posY += mprm->plr.dirX * moveSpeed;
-	}
-	if (mprm->mov.strafe_left)
-	{
-		if (mprm->map.mp[(int)(mprm->plr.posY)][(int)(mprm->plr.posX + mprm->plr.dirY *
-			(moveSpeed * 1.3))] != '1' &&
-			mprm->map.mp[(int)(mprm->plr.posY)][(int)(mprm->plr.posX + mprm->plr.dirY *
-			(moveSpeed * 1.3))] != '2')
-			mprm->plr.posX += mprm->plr.dirY * moveSpeed;
-		if (mprm->map.mp[(int)(mprm->plr.posY -
-			mprm->plr.dirX * (moveSpeed * 1.3))][(int)(mprm->plr.posX)] !=
-			'1' &&
-			mprm->map.mp
-			[(int)(mprm->plr.posY - mprm->plr.dirX * (moveSpeed * 1.3))][(int)
-			(mprm->plr.posX)] != '2')
-			mprm->plr.posY -= mprm->plr.dirX * moveSpeed;
-	}
-    draw_magic(mprm);
+void	move_down(t_game *game, double move_speed)
+{
+	if (PMAP[(int)(game->plr.pos_y)]
+	[(int)(game->plr.pos_x - game->plr.dir_x * move_speed * 1.3)] != '1')
+		game->plr.pos_x -= game->plr.dir_x * move_speed;
+	if (PMAP[(int)(game->plr.pos_y - game->plr.dir_y * move_speed * 1.3)]
+	[(int)(game->plr.pos_x)] != '1')
+		game->plr.pos_y -= game->plr.dir_y * move_speed;
+}
+
+void	turn_right(t_game *game, double move_speed)
+{
+	double oldDirX;
+	double oldPlaneX;
+
+	oldDirX = game->plr.dir_x;
+	game->plr.dir_x = game->plr.dir_x * cos(move_speed)
+					  - game->plr.dir_y * sin(move_speed);
+	game->plr.dir_y = oldDirX * sin(move_speed)
+					  + game->plr.dir_y * cos(move_speed);
+	oldPlaneX = game->plr.plane_x;
+	game->plr.plane_x = game->plr.plane_x * cos(move_speed)
+						- game->plr.plane_y * sin(move_speed);
+	game->plr.plane_y = oldPlaneX * sin(move_speed)
+						+ game->plr.plane_y * cos(move_speed);
+}
+
+void	turn_left(t_game *game, double move_speed)
+{
+	double oldDirX;
+	double oldPlaneX;
+
+	oldDirX = game->plr.dir_x;
+	game->plr.dir_x = game->plr.dir_x * cos(-move_speed)
+					  - game->plr.dir_y * sin(-move_speed);
+	game->plr.dir_y = oldDirX * sin(-move_speed)
+					  + game->plr.dir_y * cos(-move_speed);
+	oldPlaneX = game->plr.plane_x;
+	game->plr.plane_x = game->plr.plane_x * cos(-move_speed)
+						- game->plr.plane_y * sin(-move_speed);
+	game->plr.plane_y = oldPlaneX * sin(-move_speed)
+						+ game->plr.plane_y * cos(-move_speed);
+}
+
+int		moving(t_game *game)
+{
+	double	move_speed;
+
+	move_speed = 0.1;
+	if (game->mov.up)
+		move_up(game, move_speed);
+    if (game->mov.down)
+		move_down(game, move_speed);
+    if (game->mov.turn_right)
+		turn_right(game, move_speed);
+    if (game->mov.turn_left)
+		turn_left(game, move_speed);
+	if (game->mov.strafe_right)
+		strafe_left(game, move_speed);
+	if (game->mov.strafe_left)
+		strafe_right(game, move_speed);
+    draw_magic(game);
     return (0);
-}
-
-void	strafe_left(t_mprm *mprm, double speed)
-{
-	if (mprm->mov.strafe_right)
-	{
-		if (mprm->map.mp[(int)(mprm->plr.posY)][(int)(mprm->plr.posX - mprm->plr.dirY *
-			(speed * 1.3))] != '1' &&
-			mprm->map.mp[(int)(mprm->plr.posY)][(int)(mprm->plr.posX - mprm->plr.dirY *
-			(speed * 1.3))] != '2')
-			mprm->plr.posX -= mprm->plr.dirY * speed;
-		if (mprm->map.mp[(int)(mprm->plr.posY + mprm->plr.dirX * (speed * 1.3))][(int)(mprm->plr.posX)]
-			 != '1' &&
-			mprm->map.mp[(int)(mprm->plr.posY + mprm->plr.dirX * (speed * 1.3))][(int)(mprm->plr.posX)]
-			 != '2')
-			mprm->plr.posY += mprm->plr.dirX * speed;
-	}
-}
-
-void	strafe_right(t_mprm *mprm, double speed)
-{
-	if (mprm->mov.strafe_left)
-	{
-		if (mprm->map.mp[(int)(mprm->plr.posY)][(int)(mprm->plr.posX + mprm->plr.dirY *
-			(speed * 1.3))] != '1' &&
-			mprm->map.mp[(int)(mprm->plr.posY)][(int)(mprm->plr.posX + mprm->plr.dirY *
-			(speed * 1.3))] != '2')
-			mprm->plr.posX += mprm->plr.dirY * speed;
-		if (mprm->map.mp[(int)(mprm->plr.posY -
-			mprm->plr.dirX * (speed * 1.3))][(int)(mprm->plr.posX)] != '1' &&
-			mprm->map.mp
-			[(int)(mprm->plr.posY - mprm->plr.dirX * (speed * 1.3))][(int)(mprm->plr.posX)] != '2')
-			mprm->plr.posY -= mprm->plr.dirX * speed;
-	}
 }

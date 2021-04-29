@@ -12,11 +12,11 @@
 
 #include "cub3d.h"
 
-int		red_flag(int result, t_mprm *mprm)
+int		red_flag(int result, t_game *game)
 {
 	if (result < 0)
 	{
-		mprm->ok = 0;
+		game->ok = 0;
 		if (result == -1)
 			wrt_err("Invalid params");
 		if (result == -3)
@@ -35,30 +35,30 @@ int		red_flag(int result, t_mprm *mprm)
 	return (result);
 }
 
-void	free_map_matrix(t_mprm *mprm)
+void	free_map_matrix(t_game *game)
 {
 	int i;
 
 	i = 0;
-	while (i < mprm->map.d)
+	while (i < game->map.d)
 	{
-		if (mprm->map.mp[i])
-			free(mprm->map.mp[i]);
+		if (game->map.mp[i])
+			free(game->map.mp[i]);
 		i++;
 	}
-	if (mprm->map.mp)
-		free(mprm->map.mp);
+	if (game->map.mp)
+		free(game->map.mp);
 }
 
-int		free_all(int result, t_mprm *mprm, t_list **list)
+int		free_all(int result, t_game *game, t_list **list)
 {
-	red_flag(result, mprm);
+	red_flag(result, game);
 	if (list && *list)
 		free_list(list);
-	if (mprm->map.mp && *(mprm->map.mp))
-		free_map_matrix(mprm);
+	if (game->map.mp && *(game->map.mp))
+		free_map_matrix(game);
 	if (result < 0)
-		mprm->ok = 0;
+		game->ok = 0;
 	return (result);
 }
 
@@ -90,16 +90,16 @@ void	free_list(t_list **list)
 	}
 }
 
-void	free_params(t_mprm *mprm)
+void	free_params(t_game *game)
 {
-	if (mprm->chk.no == 1)
-		free(mprm->paths.no);
-	if (mprm->chk.so == 1)
-		free(mprm->paths.so);
-	if (mprm->chk.we == 1)
-		free(mprm->paths.we);
-	if (mprm->chk.ea == 1)
-		free(mprm->paths.ea);
-	if (mprm->chk.sp == 1)
-		free(mprm->paths.sp);
+	if (game->chk.no == 1)
+		free(game->paths.no);
+	if (game->chk.so == 1)
+		free(game->paths.so);
+	if (game->chk.we == 1)
+		free(game->paths.we);
+	if (game->chk.ea == 1)
+		free(game->paths.ea);
+	if (game->chk.sp == 1)
+		free(game->paths.sp);
 }

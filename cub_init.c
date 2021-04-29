@@ -12,40 +12,40 @@
 
 #include "cub3d.h"
 
-void	move_init(t_mprm *mprm)
+void	move_init(t_game *game)
 {
-	mprm->mov.up = 0;
-	mprm->mov.down = 0;
-	mprm->mov.turn_left = 0;
-	mprm->mov.turn_right = 0;
-	mprm->mov.strafe_left = 0;
-	mprm->mov.strafe_right = 0;
-	mprm->mov.exit = 0;
+	game->mov.up = 0;
+	game->mov.down = 0;
+	game->mov.turn_left = 0;
+	game->mov.turn_right = 0;
+	game->mov.strafe_left = 0;
+	game->mov.strafe_right = 0;
+	game->mov.exit = 0;
 }
 
-void	cub_init(t_mprm *mprm)
+void	cub_init(t_game *game)
 {
-	mprm->ok = 1;
-	mprm->scount = 0;
-	mprm->map.w = 0;
-	mprm->map.d = 0;
-	mprm->chk.r = 0;
-	mprm->chk.f = 0;
-	mprm->chk.c = 0;
-	mprm->chk.no = 0;
-	mprm->chk.so = 0;
-	mprm->chk.we = 0;
-	mprm->chk.ea = 0;
-	mprm->chk.sp = 0;
-	mprm->resolution.x = -1;
-	mprm->resolution.y = -1;
-	mprm->colors.cell_color.r = -1;
-	mprm->colors.cell_color.g = -1;
-	mprm->colors.cell_color.b = -1;
-	mprm->colors.floor_color.r = -1;
-	mprm->colors.floor_color.g = -1;
-	mprm->colors.floor_color.b = -1;
-	move_init(mprm);
+	game->ok = 1;
+	game->scount = 0;
+	game->map.w = 0;
+	game->map.d = 0;
+	game->chk.r = 0;
+	game->chk.f = 0;
+	game->chk.c = 0;
+	game->chk.no = 0;
+	game->chk.so = 0;
+	game->chk.we = 0;
+	game->chk.ea = 0;
+	game->chk.sp = 0;
+	game->resolution.x = -1;
+	game->resolution.y = -1;
+	game->colors.cell_color.r = -1;
+	game->colors.cell_color.g = -1;
+	game->colors.cell_color.b = -1;
+	game->colors.floor_color.r = -1;
+	game->colors.floor_color.g = -1;
+	game->colors.floor_color.b = -1;
+	move_init(game);
 }
 
 void	wrt_err(char *text)

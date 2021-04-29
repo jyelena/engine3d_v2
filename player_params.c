@@ -12,59 +12,59 @@
 
 #include "cub3d.h"
 
-void	player_plane(t_mprm *mprm)
+void	player_plane(t_game *game)
 {
-	if (mprm->plr.dir == 'N')
+	if (game->plr.dir == 'N')
 	{
-		mprm->plr.planeX = 0.66;
-		mprm->plr.planeY = 0.0;
+		game->plr.plane_x = 0.66;
+		game->plr.plane_y = 0.0;
 	}
-	else if (mprm->plr.dir == 'S')
+	else if (game->plr.dir == 'S')
 	{
-		mprm->plr.planeX = -0.66;
-		mprm->plr.planeY = 0.0;
+		game->plr.plane_x = -0.66;
+		game->plr.plane_y = 0.0;
 	}
-	else if (mprm->plr.dir == 'E')
+	else if (game->plr.dir == 'E')
 	{
-		mprm->plr.planeX = 0.0;
-		mprm->plr.planeY = -0.66;
+		game->plr.plane_x = 0.0;
+		game->plr.plane_y = 0.66;
 	}
-	else if (mprm->plr.dir == 'W')
+	else if (game->plr.dir == 'W')
 	{
-		mprm->plr.planeX = 0.0;
-		mprm->plr.planeY = 0.66;
+		game->plr.plane_x = 0.0;
+		game->plr.plane_y = -0.66;
 	}
 }
 
-void	player_dir(t_mprm *mprm)
+void	player_dir(t_game *game)
 {
-	if (mprm->plr.dir == 'N')
+	if (game->plr.dir == 'N')
 	{
-		mprm->plr.dirX = 0.0;
-		mprm->plr.dirY = 1.0;
+		game->plr.dir_x = 0.0;
+		game->plr.dir_y = -1.0;
 	}
-	else if (mprm->plr.dir == 'S')
+	else if (game->plr.dir == 'S')
 	{
-		mprm->plr.dirX = 0.0;
-		mprm->plr.dirY = -1.0;
+		game->plr.dir_x = 0.0;
+		game->plr.dir_y = 1.0;
 	}
-	else if (mprm->plr.dir == 'E')
+	else if (game->plr.dir == 'E')
 	{
-		mprm->plr.dirX = 1.0;
-		mprm->plr.dirY = 0.0;
+		game->plr.dir_x = 1.0;
+		game->plr.dir_y = 0.0;
 	}
-	else if (mprm->plr.dir == 'W')
+	else if (game->plr.dir == 'W')
 	{
-		mprm->plr.dirX = -1.0;
-		mprm->plr.dirY = 0.0;
+		game->plr.dir_x = -1.0;
+		game->plr.dir_y = 0.0;
 	}
-	player_plane(mprm);
+	player_plane(game);
 }
 
-void 	player_position(int x, int y, t_mprm *mprm)
+void 	player_position(int x, int y, t_game *game)
 {
-	mprm->plr.posX = x + 0.5;
-	mprm->plr.posY = y + 0.5;
-	mprm->plr.dir = mprm->map.mp[y][x];
-	player_dir(mprm);
+	game->plr.pos_x = x + 0.5;
+	game->plr.pos_y = y + 0.5;
+	game->plr.dir = game->map.mp[y][x];
+	player_dir(game);
 }

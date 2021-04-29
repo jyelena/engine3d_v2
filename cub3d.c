@@ -12,53 +12,66 @@
 
 #include "cub3d.h"
 
-int		get_map(int *fd, t_mprm *mprm, t_list **tmp)
+void	map_filename_valid(char *f_name)
+{
+	int		len;
+
+	len = ft_strlen(f_name);
+	if (f_name[len - 1] != 'b' || f_name[len - 2] != 'u'
+	|| f_name[len - 3] != 'c' || f_name[len - 4] != '.')
+	{
+		wrt_err("Error in map filename");
+		exit(0);
+	}
+}
+
+int		get_map(int *fd, t_game *game, t_list **tmp)
 {
 	int		fl;
 	char	*str;
 
 	fl = 0;
 	while (get_next_line(*fd, &str))
-		if (prs_map_rout(mprm, &str, &fl, tmp) < 0 || fl == 10 || fl == 2)
-			return (free_all(-2, mprm, tmp));
-	if (prs_map_rout(mprm, &str, &fl, tmp) < 0 || fl == 10 || fl == 1
+		if (prs_map_rout(game, &str, &fl, tmp) < 0 || fl == 10 || fl == 2)
+			return (free_all(-2, game, tmp));
+	if (prs_map_rout(game, &str, &fl, tmp) < 0 || fl == 10 || fl == 1
 	|| fl == 0)
-		return (free_all(-2, mprm, tmp));
-	mprm->map.d += 2;
-	mprm->map.w += 2;
+		return (free_all(-2, game, tmp));
+	game->map.d += 2;
+	game->map.w += 2;
 	fl = 0;
-	if (mprm->ok && !(mprm->map.mp = ft_calloc(mprm->map.d + 1, sizeof(char*))))
-		return (free_all(-2, mprm, tmp));
-	while (fl < mprm->map.d)
+	if (game->ok && !(game->map.mp = ft_calloc(game->map.d + 1, sizeof(char*))))
+		return (free_all(-2, game, tmp));
+	while (fl < game->map.d)
 	{
-		if (!(mprm->map.mp[fl] = ft_calloc(mprm->map.w + 1, sizeof(char))))
-			return (free_all(-1, mprm, tmp));
+		if (!(game->map.mp[fl] = ft_calloc(game->map.w + 1, sizeof(char))))
+			return (free_all(-1, game, tmp));
 		fl++;
 	}
-	mprm->map.mp[fl] = NULL;
+	game->map.mp[fl] = NULL;
 	return (1);
 }
 
-int		map_quest(int *fd, t_mprm *mprm)
+int		map_quest(int *fd, t_game *game)
 {
 	char	*str;
 	t_list	*tmp_map;
 
 	tmp_map = NULL;
 	str = NULL;
-	while (mprm->ok && chk_map_conf(mprm) != 8
+	while (game->ok && chk_map_conf(game) != 8
 	&& get_next_line(*fd, &str) == 1
-	&& prs_rout(mprm, str) > -1)
+	&& prs_rout(game, str) > -1)
 	{
 		free(str);
 		str = NULL;
 	}
-	if (mprm->ok
-	&& get_map(fd, mprm, &tmp_map) > 0
-	&& make_map(mprm, &tmp_map) > 0
-	&& valid_map(mprm) > 0)
+	if (game->ok
+	&& get_map(fd, game, &tmp_map) > 0
+	&& make_map(game, &tmp_map) > 0
+	&& valid_map(game) > 0)
 	{
-		get_color(mprm);
+		get_color(game);
 		return (1);
 	}
 	free(str);
@@ -69,23 +82,24 @@ int		map_quest(int *fd, t_mprm *mprm)
 int		main(int argc, char **argv)
 {
 	int			fd;
-	t_mprm		mprm;
+	t_game		game;
 
 	if (argc == 2 || argc == 3)
 	{
-		cub_init(&mprm);
+		map_filename_valid(argv[1]);
+		cub_init(&game);
 		if ((fd = open(argv[1], O_RDONLY)) >= 0)
 		{
-			if (map_quest(&fd, &mprm) > 0)
+			if (map_quest(&fd, &game) > 0)
 			{
-				draw_init(&mprm);
+				draw_init(&game);
 			}
 		}
 	}
 	else
-		write(1, NO_MAP_ERROR, sizeof(NO_MAP_ERROR));
-	free_params(&mprm);
-	if (mprm.map.mp && *(mprm.map.mp))
-		free_map_matrix(&mprm);
+		wrt_err(NO_MAP_ERROR);
+	free_params(&game);
+	if (game.map.mp && *(game.map.mp))
+		free_map_matrix(&game);
 	return (0);
 }

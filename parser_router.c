@@ -12,55 +12,55 @@
 
 #include "cub3d.h"
 
-int		get_chk(t_mprm *mprm, char mode)
+int		get_chk(t_game *game, char mode)
 {
 	if (mode == 'N')
-		return (mprm->chk.no);
+		return (game->chk.no);
 	else if (mode == 'W')
-		return (mprm->chk.we);
+		return (game->chk.we);
 	else if (mode == 'E')
-		return (mprm->chk.ea);
+		return (game->chk.ea);
 	else if (mode == 'O')
-		return (mprm->chk.so);
+		return (game->chk.so);
 	else if (mode == 'S')
-		return (mprm->chk.sp);
+		return (game->chk.sp);
 	else if (mode == 'F')
-		return (mprm->chk.f);
+		return (game->chk.f);
 	else if (mode == 'C')
-		return (mprm->chk.c);
+		return (game->chk.c);
 	else if (mode == 'R')
-		return (mprm->chk.r);
+		return (game->chk.r);
 	return (1);
 }
 
-int		set_chk(int result, t_mprm *mprm, char mode)
+int		set_chk(int result, t_game *game, char mode)
 {
 	if (mode == 'N')
-		mprm->chk.no = result;
+		game->chk.no = result;
 	else if (mode == 'W')
-		mprm->chk.we = result;
+		game->chk.we = result;
 	else if (mode == 'E')
-		mprm->chk.ea = result;
+		game->chk.ea = result;
 	else if (mode == 'O')
-		mprm->chk.so = result;
+		game->chk.so = result;
 	else if (mode == 32)
-		mprm->chk.sp = result;
+		game->chk.sp = result;
 	else if (mode == 'F')
-		mprm->chk.f = result;
+		game->chk.f = result;
 	else if (mode == 'C')
-		mprm->chk.c = result;
+		game->chk.c = result;
 	else if (mode == 'R')
-		mprm->chk.r = result;
+		game->chk.r = result;
 	return (result);
 }
 
-int		parse_clr_rout(t_mprm *mprm, char **str, char mode)
+int		parse_clr_rout(t_game *game, char **str, char mode)
 {
 	int		fl;
 
 	(*str)++;
-	if (*(*str) != 32 || get_chk(mprm, mode))
-		return (red_flag(-11, mprm));
+	if (*(*str) != 32 || get_chk(game, mode))
+		return (red_flag(-11, game));
 	trim_space_end(str);
 	fl = 0;
 	while (*(*str))
@@ -73,16 +73,16 @@ int		parse_clr_rout(t_mprm *mprm, char **str, char mode)
 			(*str)++;
 		}
 		else if (*(*str) >= '0' && *(*str) <= '9')
-			parse_clr(mprm, str, mode, &fl);
+			parse_clr(game, str, mode, &fl);
 		else
-			return (red_flag(-11, mprm));
+			return (red_flag(-11, game));
 		if (fl > 30 || fl == 1 || fl % 10 > 1)
-			return (red_flag(-11, mprm));
+			return (red_flag(-11, game));
 	}
 	return (1);
 }
 
-int		parse_pth_rout(t_mprm *mprm, char **str, int len)
+int		parse_pth_rout(t_game *game, char **str, int len)
 {
 	char mode;
 
@@ -94,37 +94,37 @@ int		parse_pth_rout(t_mprm *mprm, char **str, int len)
 	|| ((*str)[0] == 'E' && (*str)[1] != 'A')
 	|| ((*str)[0] == 'O' && (*str)[1] != 32)
 	|| ((*str)[0] == 'S' && (*str)[1] != 32))
-		return (red_flag(-1, mprm));
+		return (red_flag(-1, game));
 	if (mode == 'N' || mode == 'W' || mode == 'E')
 		(*str)++;
-	return (parse_pth(mprm, str, mode, len));
+	return (parse_pth(game, str, mode, len));
 }
 
-int		prs_rout(t_mprm *mprm, char *line)
+int		prs_rout(t_game *game, char *line)
 {
 	int		len;
 	char	mode;
 
 	len = trim_space(&line);
 	if (ft_strlen(line) == 1)
-		return (red_flag(-1, mprm));
+		return (red_flag(-1, game));
 	while (*line == 32)
 		line++;
 	mode = *line;
 	if (*line == 'R')
-		return (set_chk(parse_resolut(mprm, &line), mprm, mode));
+		return (set_chk(parse_resolut(game, &line), game, mode));
 	else if (*line == 'F' || *line == 'C')
-		return (set_chk(parse_clr_rout(mprm, &line, *line), mprm, mode));
+		return (set_chk(parse_clr_rout(game, &line, *line), game, mode));
 	else if (*line == 'N' || *line == 'W' || *line == 'E')
-		return (set_chk(parse_pth_rout(mprm, &line, len), mprm, mode));
+		return (set_chk(parse_pth_rout(game, &line, len), game, mode));
 	else if (*line == 'S')
 	{
 		line++;
 		mode = *line;
 		if (*line == 'O' || *line == 32)
-			return (set_chk(parse_pth_rout(mprm, &line, len), mprm, mode));
+			return (set_chk(parse_pth_rout(game, &line, len), game, mode));
 	}
 	else if (!*line)
 		return (0);
-	return (red_flag(-1, mprm));
+	return (red_flag(-1, game));
 }
