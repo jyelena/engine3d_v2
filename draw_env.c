@@ -6,7 +6,7 @@
 /*   By: jyelena <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 19:29:23 by jyelena           #+#    #+#             */
-/*   Updated: 2021/04/28 19:29:28 by jyelena          ###   ########.fr       */
+/*   Updated: 2021/04/30 06:11:04 by jyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 void	draw_env(t_game *game, int x)
 {
-	t_tex ptex;
-	int y;
+	t_tex	ptex;
+	int		y;
 
+	draw_calc_wall(game, x);
+	draw_coord_calc(game, x);
 	y = game->ray.draw_start;
-	while ( y < game->ray.draw_end)
+	while (y < game->ray.draw_end)
 	{
 		if (game->ray.side == 0 && game->ray.step_x > 0)
 			ptex = game->tex.ea;
@@ -38,7 +40,7 @@ void	draw_env(t_game *game, int x)
 
 void	draw_calc_wall(t_game *game, int x)
 {
-	if(game->ray.side == 0)
+	if (game->ray.side == 0)
 		game->ray.wall_x = game->plr.pos_y
 				+ game->ray.perp_wall_dist * game->ray.ray_dir_y;
 	else

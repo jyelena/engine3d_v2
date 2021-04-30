@@ -15,27 +15,21 @@
 void	strafe_left(t_game *game, double speed)
 {
 	if (game->map.mp[(int)(game->plr.pos_y)]
-	[(int)(game->plr.pos_x - game->plr.dir_y * (speed * MULTSTRAFE))] != '1'
-	&& game->map.mp[(int)(game->plr.pos_y)]
-	[(int)(game->plr.pos_x - game->plr.dir_y * (speed * MULTSTRAFE))] != '2')
+	[(int)(game->plr.pos_x - game->plr.dir_y * speed - game->plr.dir_y
+	* MULTSTRAFE)] == '0')
 		game->plr.pos_x += game->plr.dir_y * speed;
 	if (game->map.mp[(int)(game->plr.pos_y + game->plr.dir_x
-	* (speed * MULTSTRAFE))][(int)(game->plr.pos_x)] != '1'
-	&& game->map.mp[(int)(game->plr.pos_y + game->plr.dir_x
-	* (speed * MULTSTRAFE))][(int)(game->plr.pos_x)] != '2')
+	* speed + game->plr.dir_x * MULTSTRAFE)][(int)(game->plr.pos_x)] == '0')
 		game->plr.pos_y -= game->plr.dir_x * speed;
 }
 
 void	strafe_right(t_game *game, double speed)
 {
 	if (game->map.mp[(int)(game->plr.pos_y)]
-	[(int)(game->plr.pos_x + game->plr.dir_y * (speed * MULTSTRAFE))] != '1'
-	&& game->map.mp[(int)(game->plr.pos_y)]
-	[(int)(game->plr.pos_x + game->plr.dir_y * (speed * MULTSTRAFE))] != '2')
+	[(int)(game->plr.pos_x + game->plr.dir_y * speed + game->plr.dir_y
+	* MULTSTRAFE)] == '0')
 		game->plr.pos_x -= game->plr.dir_y * speed;
 	if (game->map.mp[(int)(game->plr.pos_y - game->plr.dir_x
-	* (speed * MULTSTRAFE))][(int)(game->plr.pos_x)] != '1'
-	&& game->map.mp[(int)(game->plr.pos_y - game->plr.dir_x
-	* (speed * MULTSTRAFE))][(int)(game->plr.pos_x)] != '2')
+	* speed - game->plr.dir_x * MULTSTRAFE)][(int)(game->plr.pos_x)] == '0')
 		game->plr.pos_y += game->plr.dir_x * speed;
 }

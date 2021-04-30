@@ -6,13 +6,13 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 22:05:01 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/04/26 22:25:53 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/04/30 06:37:35 by jyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void 	swap_sprites(t_game *game, int i)
+void	swap_sprites(t_game *game, int i)
 {
 	t_spr	spr_tmp;
 
@@ -21,10 +21,11 @@ void 	swap_sprites(t_game *game, int i)
 	(game->spr)[i + 1] = spr_tmp;
 }
 
-void 	sort_sprites(t_game *game)
+void	sort_sprites(t_game *game)
 {
 	int		i;
-	int 	flg;
+	int		flg;
+
 	i = 0;
 	flg = 1;
 	while (flg)
@@ -42,18 +43,16 @@ void 	sort_sprites(t_game *game)
 	}
 }
 
-void 	calc_sprite_dist(t_game *game)
+void	calc_sprite_dist(t_game *game)
 {
-	int	i;
+	int		i;
 
 	i = 0;
-	while(i < game->scount)
+	while (i < game->scount)
 	{
 		(game->spr)[i].dist = ((game->plr.pos_x - (game->spr)[i].x)
 		* (game->plr.pos_x - (game->spr)[i].x) + (game->plr.pos_y
-												  - (game->spr)[i].y) *
-												  (game->plr.pos_y - (game->spr)
-												  [i].y));
+		- (game->spr)[i].y) * (game->plr.pos_y - (game->spr)[i].y));
 		i++;
 	}
 }
@@ -62,7 +61,7 @@ void	fill_sprites_struct(t_game *game)
 {
 	int		x;
 	int		y;
-	int 	i;
+	int		i;
 
 	i = 0;
 	if (!(game->spr = (t_spr *)malloc(sizeof(t_spr) * game->scount)))
@@ -75,8 +74,8 @@ void	fill_sprites_struct(t_game *game)
 		{
 			if (game->map.mp[y][x] == '2')
 			{
-				(game->spr)[i].x = x + 0.5;
-				(game->spr)[i].y = y + 0.5;
+				(game->spr)[i].x = x;
+				(game->spr)[i].y = y;
 				i++;
 			}
 			x++;

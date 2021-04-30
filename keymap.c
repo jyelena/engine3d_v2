@@ -6,7 +6,7 @@
 /*   By: jyelena <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 19:30:20 by jyelena           #+#    #+#             */
-/*   Updated: 2021/04/28 20:14:36 by jyelena          ###   ########.fr       */
+/*   Updated: 2021/04/30 06:25:33 by jyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,9 @@ int		key_release(int key, t_game *game)
 	if (key == 2)
 		game->mov.strafe_left = 0;
 	return (0);
+}
+
+int		close_win(void)
+{
+	exit(0);
 }

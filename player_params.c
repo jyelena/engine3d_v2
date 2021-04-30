@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 21:57:48 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/04/26 22:28:49 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/04/30 06:33:59 by jyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,11 @@ void	player_dir(t_game *game)
 	player_plane(game);
 }
 
-void 	player_position(int x, int y, t_game *game)
+void	player_position(int x, int y, t_game *game)
 {
 	game->plr.pos_x = x + 0.5;
 	game->plr.pos_y = y + 0.5;
 	game->plr.dir = game->map.mp[y][x];
+	game->map.mp[y][x] = '0';
 	player_dir(game);
 }

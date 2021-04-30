@@ -12,6 +12,11 @@
 
 #include "cub3d.h"
 
+void	file_init(t_fname *file)
+{
+	file->name = "./snapshot.bmp";
+}
+
 void	move_init(t_game *game)
 {
 	game->mov.up = 0;
@@ -39,9 +44,9 @@ void	cub_init(t_game *game)
 	game->chk.sp = 0;
 	game->resolution.x = -1;
 	game->resolution.y = -1;
-	game->colors.cell_color.r = -1;
-	game->colors.cell_color.g = -1;
-	game->colors.cell_color.b = -1;
+	game->colors.ceil_color.r = -1;
+	game->colors.ceil_color.g = -1;
+	game->colors.ceil_color.b = -1;
 	game->colors.floor_color.r = -1;
 	game->colors.floor_color.g = -1;
 	game->colors.floor_color.b = -1;

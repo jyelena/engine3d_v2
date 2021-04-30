@@ -6,7 +6,7 @@
 /*   By: jyelena <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 19:29:40 by jyelena           #+#    #+#             */
-/*   Updated: 2021/04/28 19:29:42 by jyelena          ###   ########.fr       */
+/*   Updated: 2021/04/30 06:08:31 by jyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 int				create_rgb(int r, int g, int b)
 {
-	return(r << 16 | g << 8 | b);
+	return (r << 16 | g << 8 | b);
 }
 
-void 			get_color(t_game *game)
+void			get_color(t_game *game)
 {
-	game->colors.cell_color.rgb = create_rgb(game->colors.cell_color.r,
-										  game->colors.cell_color.g,
-										  game->colors.cell_color.b);
+	game->colors.ceil_color.rgb = create_rgb(game->colors.ceil_color.r,
+											game->colors.ceil_color.g,
+											game->colors.ceil_color.b);
 	game->colors.floor_color.rgb = create_rgb(game->colors.floor_color.r,
-										  game->colors.floor_color.g,
-										  game->colors.floor_color.b);
+											game->colors.floor_color.g,
+											game->colors.floor_color.b);
 }
 
 unsigned int	*take_pixel(t_tex tex, int x, int y)
 {
-	return ((unsigned int *)(tex.timg.addr + (y * tex.timg.linelen + x * (tex
-	.timg.bpp / 8))));
+	return ((unsigned int *)(tex.timg.addr + (y * tex.timg.linelen + x
+	* (tex.timg.bpp / 8))));
 }
 
 void			take_textures(t_game *game)

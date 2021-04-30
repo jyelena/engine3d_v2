@@ -74,12 +74,12 @@ int		parse_clr(t_game *game, char **str, char mode, int *fl)
 	}
 	if (mode == 'C')
 	{
-		if (game->colors.cell_color.r < 0)
-			game->colors.cell_color.r = result;
-		else if (game->colors.cell_color.g < 0)
-			game->colors.cell_color.g = result;
-		else if (game->colors.cell_color.b < 0)
-			game->colors.cell_color.b = result;
+		if (game->colors.ceil_color.r < 0)
+			game->colors.ceil_color.r = result;
+		else if (game->colors.ceil_color.g < 0)
+			game->colors.ceil_color.g = result;
+		else if (game->colors.ceil_color.b < 0)
+			game->colors.ceil_color.b = result;
 	}
 	return (1);
 }

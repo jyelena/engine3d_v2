@@ -6,13 +6,13 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 18:28:34 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/04/02 03:30:05 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/04/30 06:09:27 by jyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	map_filename_valid(char *f_name)
+int		map_filename_valid(char *f_name, int argc)
 {
 	int		len;
 
@@ -23,6 +23,9 @@ void	map_filename_valid(char *f_name)
 		wrt_err("Error in map filename");
 		exit(0);
 	}
+	if (argc == 2)
+		return (0);
+	return (1);
 }
 
 int		get_map(int *fd, t_game *game, t_list **tmp)
@@ -79,20 +82,39 @@ int		map_quest(int *fd, t_game *game)
 	return (-1);
 }
 
+void	process_option(char *option, t_game *game)
+{
+	t_fname	file;
+
+	if (ft_strlen(option) != ft_strlen("--save") ||
+	ft_strncmp(option, "--save", ft_strlen(option)) != 0)
+	{
+		wrt_err("Error\nUnknown option");
+		exit(0);
+	}
+	file_init(&file);
+	take_screenshot(game, &file);
+	exit(0);
+}
+
 int		main(int argc, char **argv)
 {
 	int			fd;
+	int			sshot_flg;
 	t_game		game;
 
 	if (argc == 2 || argc == 3)
 	{
-		map_filename_valid(argv[1]);
+		sshot_flg = map_filename_valid(argv[1], argc);
 		cub_init(&game);
 		if ((fd = open(argv[1], O_RDONLY)) >= 0)
 		{
 			if (map_quest(&fd, &game) > 0)
 			{
-				draw_init(&game);
+				draw_init(&game, sshot_flg);
+				if (argc == 3)
+					process_option(argv[2], &game);
+				live_game(&game);
 			}
 		}
 	}
