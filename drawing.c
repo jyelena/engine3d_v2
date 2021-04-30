@@ -75,7 +75,7 @@ void	draw_init(t_game *game, int sshot_flg)
 	get_screen_size(game, sshot_flg);
 	game->z_buffer = (double *)malloc(sizeof(double) * W);
 	if (!sshot_flg)
-		game->data.win = mlx_new_window(game->data.mlx, W, H, "");
+		game->data.win = mlx_new_window(game->data.mlx, W, H, "cub3D");
 	game->data.img = mlx_new_image(game->data.mlx, W, H);
 	game->data.addr = mlx_get_data_addr(game->data.img,
 	&game->data.bits_per_pixel, &game->data.line_length, &game->data.endian);
