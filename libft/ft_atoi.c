@@ -30,7 +30,7 @@ int	ft_atoi(const char *str)
 	{
 		num = num * 10 + *str - '0';
 		if ((num * sign) > MAX_INT)
-			return (-1);
+			return (1000000000);
 		if ((num * sign) < MIN_INT)
 			return (0);
 		str++;
