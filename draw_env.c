@@ -30,7 +30,7 @@ void	draw_env(t_game *game, int x)
 			ptex = game->tex.so;
 		else
 			ptex = game->tex.no;
-		game->ray.tex_y = (int)game->ray.tex_pos & (texHeight - 1);
+		game->ray.tex_y = (int)game->ray.tex_pos & (TEXHEIGH - 1);
 		game->ray.tex_pos += game->ray.step;
 		game->ray.color = take_pixel(ptex, game->ray.tex_x, game->ray.tex_y);
 		my_mlx_pixel_put(game, x, y, (int)(*game->ray.color));
@@ -51,12 +51,12 @@ void	draw_calc_wall(t_game *game, int x)
 
 void	draw_coord_calc(t_game *game, int x)
 {
-	game->ray.tex_x = (int)(game->ray.wall_x * (double)texWidth);
+	game->ray.tex_x = (int)(game->ray.wall_x * (double)TEXWIDTH);
 	if (game->ray.side == 0 && game->ray.ray_dir_x > 0)
-		game->ray.tex_x = texWidth - game->ray.tex_x - 1;
+		game->ray.tex_x = TEXWIDTH - game->ray.tex_x - 1;
 	if (game->ray.side == 1 && game->ray.ray_dir_y < 0)
-		game->ray.tex_x = texWidth - game->ray.tex_x - 1;
-	game->ray.step = 1.0 * texHeight / game->ray.line_h;
+		game->ray.tex_x = TEXWIDTH - game->ray.tex_x - 1;
+	game->ray.step = 1.0 * TEXHEIGH / game->ray.line_h;
 	game->ray.tex_pos = (game->ray.draw_start - H / 2.0
 	+ game->ray.line_h / 2.0) * game->ray.step;
 }

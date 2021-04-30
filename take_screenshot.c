@@ -20,17 +20,17 @@ void	get_screen_size(t_game *game, int sshot_flg)
 	mlx_get_screen_size(game->data.mlx, &x, &y);
 	if (sshot_flg)
 	{
-		if (game->resolution.x > x)
-			game->resolution.x = x;
-		if (game->resolution.y > y)
-			game->resolution.y = y;
+		if (game->resolution.x > 10000)
+			game->resolution.x = 10000;
+		if (game->resolution.y > 10000)
+			game->resolution.y = 10000;
 	}
 	else
 	{
 		if (game->resolution.x > x)
-			game->resolution.x = 10000;
+			game->resolution.x = x;
 		if (game->resolution.y > y)
-			game->resolution.y = 10000;
+			game->resolution.y = y;
 	}
 }
 

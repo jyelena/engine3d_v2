@@ -6,7 +6,7 @@
 /*   By: jyelena <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 19:29:57 by jyelena           #+#    #+#             */
-/*   Updated: 2021/04/30 06:15:34 by jyelena          ###   ########.fr       */
+/*   Updated: 2021/04/30 22:03:51 by jyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	draw_put_sprites(t_sprt *spr, t_game *game)
 	while (spr->y < spr->drw_end_y)
 	{
 		spr->d = (spr->y) * 256 - H * 128 + spr->sprt_h * 128;
-		spr->tex_y = ((spr->d * texHeight) / spr->sprt_h) / 256;
+		spr->tex_y = ((spr->d * TEXHEIGH) / spr->sprt_h) / 256;
 		spr->color = take_pixel(game->tex.sp, spr->tex_x, spr->tex_y);
 		if ((int)(*(spr->color)) != 0x000000)
 			my_mlx_pixel_put(game, spr->strp, spr->y, (int)(*(spr->color)));
@@ -53,7 +53,7 @@ void	draw_spr_prepare(t_sprt *spr, t_game *game, int s)
 	spr->strp = spr->drw_start_x;
 }
 
-void	draw_sprites(t_game *game, double **z_buffer, int s)
+void	draw_sprites(t_game *game, int s)
 {
 	t_sprt	spr;
 
@@ -63,9 +63,9 @@ void	draw_sprites(t_game *game, double **z_buffer, int s)
 		while (spr.strp < spr.drw_end_x)
 		{
 			spr.tex_x = (int)(256 * (spr.strp - (-(spr.sprt_w) / 2
-					+ spr.sprt_scr_x)) * texWidth / spr.sprt_w) / 256;
+					+ spr.sprt_scr_x)) * TEXWIDTH / spr.sprt_w) / 256;
 			if (spr.trform_y > 0 && spr.strp > 0 && spr.strp < W
-			&& spr.trform_y < (*z_buffer)[spr.strp])
+			&& spr.trform_y < (game->z_buffer)[spr.strp])
 			{
 				spr.y = spr.drw_start_y;
 				draw_put_sprites(&spr, game);

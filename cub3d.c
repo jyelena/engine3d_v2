@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 18:28:34 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/04/30 06:09:27 by jyelena          ###   ########.fr       */
+/*   Updated: 2021/04/30 15:29:44 by jyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		map_filename_valid(char *f_name, int argc)
 
 	len = ft_strlen(f_name);
 	if (f_name[len - 1] != 'b' || f_name[len - 2] != 'u'
-	|| f_name[len - 3] != 'c' || f_name[len - 4] != '.')
+			|| f_name[len - 3] != 'c' || f_name[len - 4] != '.')
 	{
 		wrt_err("Error in map filename");
 		exit(0);
@@ -38,7 +38,7 @@ int		get_map(int *fd, t_game *game, t_list **tmp)
 		if (prs_map_rout(game, &str, &fl, tmp) < 0 || fl == 10 || fl == 2)
 			return (free_all(-2, game, tmp));
 	if (prs_map_rout(game, &str, &fl, tmp) < 0 || fl == 10 || fl == 1
-	|| fl == 0)
+			|| fl == 0)
 		return (free_all(-2, game, tmp));
 	game->map.d += 2;
 	game->map.w += 2;

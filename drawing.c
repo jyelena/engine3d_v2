@@ -45,10 +45,7 @@ void	draw_f_c(t_game *game)
 
 void	draw_magic(t_game *game, int sshot_flg, int x)
 {
-	double *z_buffer;
-
 	draw_f_c(game);
-	z_buffer = (double *)malloc(sizeof(double) * W);
 	while (++x < W)
 	{
 		draw_ray_calc(game, x);
@@ -57,9 +54,9 @@ void	draw_magic(t_game *game, int sshot_flg, int x)
 		draw_calc_per_ray(game, x);
 		draw_lohi_pix_calc(game, x);
 		draw_env(game, x);
-		z_buffer[x] = game->ray.perp_wall_dist;
+		(game->z_buffer)[x] = game->ray.perp_wall_dist;
 	}
-	draw_sprites(game, &z_buffer, 0);
+	draw_sprites(game, 0);
 	if (!sshot_flg)
 	{
 		mlx_put_image_to_window(game->data.mlx, game->data.win, game->data.img,
@@ -76,6 +73,7 @@ void	draw_init(t_game *game, int sshot_flg)
 {
 	game->data.mlx = mlx_init();
 	get_screen_size(game, sshot_flg);
+	game->z_buffer = (double *)malloc(sizeof(double) * W);
 	if (!sshot_flg)
 		game->data.win = mlx_new_window(game->data.mlx, W, H, "");
 	game->data.img = mlx_new_image(game->data.mlx, W, H);
