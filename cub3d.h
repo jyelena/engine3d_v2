@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 21:17:20 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/04/26 20:31:19 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/04/30 22:02:49 by jyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
-# include "get_next_line/get_next_line.h"
+# include "get_next_line.h"
 # include "libft/libft.h"
 # include "mlx/mlx.h"
 # include "dymlx/mlx1.h"
@@ -27,11 +27,10 @@
 # define NO_MAP_ERROR "Error\nNeed map file as argument!"
 # define W game->resolution.x
 # define H game->resolution.y
-# define MAP game.map.mp
 # define PMAP game->map.mp
-# define texWidth 64
-# define texHeight 64
-# define MULTSTRAFE 0.3
+# define TEXWIDTH 64
+# define TEXHEIGH 64
+# define MULTSTRAFE 0.2
 
 typedef struct		s_sprt
 {
@@ -110,15 +109,15 @@ typedef struct		s_spr
 
 }					t_spr;
 
-typedef struct 		s_plr
+typedef struct		s_plr
 {
-	double 			pos_x;
-	double 			pos_y;
-	double 			dir_x;
-	double 			dir_y;
-	double 			plane_x;
-	double 			plane_y;
-	char 			dir;
+	double			pos_x;
+	double			pos_y;
+	double			dir_x;
+	double			dir_y;
+	double			plane_x;
+	double			plane_y;
+	char			dir;
 }					t_plr;
 
 typedef struct		s_ray
@@ -135,7 +134,7 @@ typedef struct		s_ray
 	double			perp_wall_dist;
 	int				step_x;
 	int				step_y;
-	unsigned int 	*color;
+	unsigned int	*color;
 	int				hit;
 	int				side;
 	int				line_h;
@@ -182,14 +181,14 @@ typedef struct		s_fcolor {
 	int				r;
 	int				g;
 	int				b;
-	unsigned int 	rgb;
+	unsigned int	rgb;
 }					t_fcolor;
 
 typedef struct		s_ccolor {
 	int				r;
 	int				g;
 	int				b;
-	unsigned int 	rgb;
+	unsigned int	rgb;
 }					t_ccolor;
 
 typedef struct		s_colors {
@@ -205,11 +204,11 @@ typedef struct		s_paths {
 	char			*sp;
 }					t_paths;
 
-typedef struct	s_fname
+typedef struct		s_fname
 {
-	int 		fd;
-	char 		*name;
-}				t_fname;
+	int				fd;
+	char			*name;
+}					t_fname;
 
 typedef struct		s_game {
 	t_resolution	resolution;
@@ -223,7 +222,8 @@ typedef struct		s_game {
 	t_data			data;
 	t_move			mov;
 	t_alltex		tex;
-	int 			scount;
+	double			*z_buffer;
+	int				scount;
 	int				ok;
 }					t_game;
 
@@ -246,7 +246,7 @@ void				draw_calc_per_ray(t_game *game, int x);
 void				draw_calc_wall(t_game *game, int x);
 void				draw_coord_calc(t_game *game, int x);
 void				draw_lohi_pix_calc(t_game *game, int x);
-void				draw_sprites(t_game *game, double **z_buffer, int s);
+void				draw_sprites(t_game *game, int s);
 void				draw_magic(t_game *game, int sshot_flg, int x);
 void				get_color(t_game *game);
 void				draw_f_c(t_game *game);
