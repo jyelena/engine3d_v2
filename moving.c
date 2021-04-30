@@ -15,20 +15,20 @@
 void	move_up(t_game *game, double move_speed)
 {
 	if (PMAP[(int)(game->plr.pos_y)]
-	[(int)(game->plr.pos_x + game->plr.dir_x * move_speed * 1.3)] == '0')
+	[(int)(game->plr.pos_x + game->plr.dir_x * move_speed)] == '0')
 		game->plr.pos_x += game->plr.dir_x * move_speed;
-	if (PMAP[(int)(game->plr.pos_y + game->plr.dir_y * move_speed * 1.3)]
-	[(int)(game->plr.pos_x)] != '1')
+	if (PMAP[(int)(game->plr.pos_y + game->plr.dir_y * move_speed)]
+	[(int)(game->plr.pos_x)] == '0')
 		game->plr.pos_y += game->plr.dir_y * move_speed;
 }
 
 void	move_down(t_game *game, double move_speed)
 {
 	if (PMAP[(int)(game->plr.pos_y)]
-	[(int)(game->plr.pos_x - game->plr.dir_x * move_speed * 1.3)] != '1')
+	[(int)(game->plr.pos_x - game->plr.dir_x * move_speed)] == '0')
 		game->plr.pos_x -= game->plr.dir_x * move_speed;
-	if (PMAP[(int)(game->plr.pos_y - game->plr.dir_y * move_speed * 1.3)]
-	[(int)(game->plr.pos_x)] != '1')
+	if (PMAP[(int)(game->plr.pos_y - game->plr.dir_y * move_speed)]
+	[(int)(game->plr.pos_x)] == '0')
 		game->plr.pos_y -= game->plr.dir_y * move_speed;
 }
 
@@ -70,7 +70,7 @@ int		moving(t_game *game)
 {
 	double	move_speed;
 
-	move_speed = 0.085;
+	move_speed = MULTSTRAFE / 2.01;
 	if (game->mov.up)
 		move_up(game, move_speed);
 	if (game->mov.down)
