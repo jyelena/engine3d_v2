@@ -108,8 +108,6 @@ int		prs_rout(t_game *game, char *line)
 	len = trim_space(&line);
 	if (ft_strlen(line) == 1)
 		return (red_flag(-1, game));
-	while (*line == 32)
-		line++;
 	mode = *line;
 	if (*line == 'R')
 		return (set_chk(parse_resolut(game, &line), game, mode));
@@ -126,5 +124,6 @@ int		prs_rout(t_game *game, char *line)
 	}
 	else if (!*line)
 		return (0);
-	return (red_flag(-1, game));
+	free_all(-1, game, NULL);
+	wrt_err("Invalid params", 1);
 }

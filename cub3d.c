@@ -30,7 +30,7 @@ int		get_map(int *fd, t_game *game, t_list **tmp)
 	int		fl;
 	char	*str;
 
-	fl = -1;
+	fl = 0;
 	while (get_next_line(*fd, &str))
 		if (prs_map_rout(game, &str, &fl, tmp) < 0 || fl == 10 || fl == 2)
 			return (free_all(-2, game, tmp));

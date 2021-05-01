@@ -52,7 +52,6 @@ void	free_map_matrix(t_game *game)
 
 int		free_all(int result, t_game *game, t_list **list)
 {
-	red_flag(result, game);
 	if (list && *list)
 		free_list(list);
 	if (game->map.mp && *(game->map.mp))

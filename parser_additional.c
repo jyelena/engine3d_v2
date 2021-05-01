@@ -16,7 +16,7 @@ int		chk_in_set(char c, int *flg)
 {
 	char	*set;
 
-	set = "012NWES";
+	set = "012NWES ";
 	while (*set)
 	{
 		if (c == *set)

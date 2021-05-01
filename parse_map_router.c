@@ -6,7 +6,7 @@
 /*   By: dmikhaylov <dmikhaylov@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 21:13:27 by dmikhaylov        #+#    #+#             */
-/*   Updated: 2021/04/26 22:30:27 by dmikhaylov       ###   ########.fr       */
+/*   Updated: 2021/05/01 04:37:14 by jyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,7 @@ void	chk_bigger_len(int *flg, int len, t_game *game)
 
 int		chk_len(int len, int *flg)
 {
-	if (len == 0 && *flg == -1)
-	{
-		*flg = 0;
-		return (0);
-	}
-	else if (len == 0)
+	if (len == 0 && *flg)
 		return (1);
 	return (0);
 }
@@ -64,7 +59,7 @@ int		prs_map_rout(t_game *game, char **str, int *flg, t_list **tmp)
 		return (1);
 	while (len > 0 && (*str)[i])
 	{
-		if ((*str)[i] != 32 && !chk_in_set((*str)[i], flg))
+		if (!chk_in_set((*str)[i], flg))
 			return (-2);
 		if ((*str)[i] == '2')
 			game->scount++;
