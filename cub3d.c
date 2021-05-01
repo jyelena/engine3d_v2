@@ -19,10 +19,7 @@ int		map_filename_valid(char *f_name, int argc)
 	len = ft_strlen(f_name);
 	if (f_name[len - 1] != 'b' || f_name[len - 2] != 'u'
 			|| f_name[len - 3] != 'c' || f_name[len - 4] != '.')
-	{
-		wrt_err("Error in map filename");
-		exit(0);
-	}
+		wrt_err("Invalid map filename", 1);
 	if (argc == 2)
 		return (0);
 	return (1);
@@ -33,7 +30,7 @@ int		get_map(int *fd, t_game *game, t_list **tmp)
 	int		fl;
 	char	*str;
 
-	fl = 0;
+	fl = -1;
 	while (get_next_line(*fd, &str))
 		if (prs_map_rout(game, &str, &fl, tmp) < 0 || fl == 10 || fl == 2)
 			return (free_all(-2, game, tmp));
@@ -62,17 +59,16 @@ int		map_quest(int *fd, t_game *game)
 
 	tmp_map = NULL;
 	str = NULL;
+	if (read(*fd, str, 0) < 0)
+		wrt_err("Invalid config file", 1);
 	while (game->ok && chk_map_conf(game) != 8
-	&& get_next_line(*fd, &str) == 1
-	&& prs_rout(game, str) > -1)
+	&& get_next_line(*fd, &str) == 1 && prs_rout(game, str) > -1)
 	{
 		free(str);
 		str = NULL;
 	}
-	if (game->ok
-	&& get_map(fd, game, &tmp_map) > 0
-	&& make_map(game, &tmp_map) > 0
-	&& valid_map(game) > 0)
+	if (game->ok && get_map(fd, game, &tmp_map) > 0
+	&& make_map(game, &tmp_map) > 0 && valid_map(game) > 0)
 	{
 		get_color(game);
 		return (1);
@@ -88,10 +84,7 @@ void	process_option(char *option, t_game *game)
 
 	if (ft_strlen(option) != ft_strlen("--save") ||
 	ft_strncmp(option, "--save", ft_strlen(option)) != 0)
-	{
-		wrt_err("Error\nUnknown option");
-		exit(0);
-	}
+		wrt_err("Unknown option", 1);
 	file_init(&file);
 	take_screenshot(game, &file);
 	exit(0);
@@ -119,7 +112,7 @@ int		main(int argc, char **argv)
 		}
 	}
 	else
-		wrt_err(NO_MAP_ERROR);
+		wrt_err(NO_MAP_ERROR, 1);
 	free_params(&game);
 	if (game.map.mp && *(game.map.mp))
 		free_map_matrix(&game);

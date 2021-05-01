@@ -12,6 +12,14 @@
 
 #include "cub3d.h"
 
+void	chk_coma(int *fl)
+{
+	if (*fl > 0 && (*fl - 1) % 10 != 0)
+		wrt_err("Invalid color params", 1);
+	*fl = *fl - (*fl % 10);
+	*fl += 10;
+}
+
 int		init_path(t_game *game, char *str, char mode, int len)
 {
 	char	*filename;
@@ -59,8 +67,7 @@ int		parse_clr(t_game *game, char **str, char mode, int *fl)
 {
 	int	result;
 
-	*fl = *fl - (*fl % 10);
-	*fl += 10;
+	chk_coma(fl);
 	if ((result = fill_num(str, 3)) < 0)
 		return (red_flag(-11, game));
 	if (mode == 'F')

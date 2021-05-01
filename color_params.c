@@ -47,6 +47,7 @@ void
 			game->paths.we, &(game->tex.we.w), &(game->tex.we.h));
 	game->tex.sp.timg.img = mlx_xpm_file_to_image(game->data.mlx,
 			game->paths.sp, &(game->tex.sp.w), &(game->tex.sp.h));
+	check_textures(game);
 }
 
 void

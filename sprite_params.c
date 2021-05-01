@@ -55,6 +55,7 @@ void	calc_sprite_dist(t_game *game)
 		- (game->spr)[i].y) * (game->plr.pos_y - (game->spr)[i].y));
 		i++;
 	}
+	sort_sprites(game);
 }
 
 void	fill_sprites_struct(t_game *game)
@@ -83,5 +84,4 @@ void	fill_sprites_struct(t_game *game)
 		y++;
 	}
 	calc_sprite_dist(game);
-	sort_sprites(game);
 }

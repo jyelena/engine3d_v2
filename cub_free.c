@@ -18,19 +18,19 @@ int		red_flag(int result, t_game *game)
 	{
 		game->ok = 0;
 		if (result == -1)
-			wrt_err("Invalid params");
+			wrt_err("Invalid params", 0);
 		if (result == -3)
-			wrt_err("Map not found");
+			wrt_err("Map not found", 0);
 		else if (result == -12)
-			wrt_err("Invalid resolution");
+			wrt_err("Invalid resolution", 0);
 		else if (result == -2)
-			wrt_err("Invalid map");
+			wrt_err("Invalid map", 0);
 		else if (result == -11)
-			wrt_err("Invalid color params");
+			wrt_err("Invalid color params", 0);
 		else if (result == -13)
-			wrt_err("Invalid filename");
+			wrt_err("Invalid filename", 0);
 		else
-			wrt_err("Error");
+			wrt_err("", 0);
 	}
 	return (result);
 }

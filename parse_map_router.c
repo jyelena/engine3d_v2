@@ -28,20 +28,40 @@ void	line_cpy(char *source, char **dest, t_game *game)
 	}
 }
 
+void	chk_bigger_len(int *flg, int len, t_game *game)
+{
+	if (*flg > 0)
+		if (len > game->map.w)
+			game->map.w = len;
+}
+
+int		chk_len(int len, int *flg)
+{
+	if (len == 0 && *flg == -1)
+	{
+		*flg = 0;
+		return (0);
+	}
+	else if (len == 0)
+		return (1);
+	return (0);
+}
+
 int		prs_map_rout(t_game *game, char **str, int *flg, t_list **tmp)
 {
 	int		len;
 	int		i;
 
-	i = 0;
 	len = ft_strlen(*str);
-	if (len == 0)
+	i = 0;
+	if (chk_len(len, flg))
 	{
 		free(*str);
 		*str = NULL;
 		return (-2);
 	}
-	ft_lstadd_back(tmp, ft_lstnew(*str));
+	if (len == 0)
+		return (1);
 	while (len > 0 && (*str)[i])
 	{
 		if ((*str)[i] != 32 && !chk_in_set((*str)[i], flg))
@@ -50,9 +70,8 @@ int		prs_map_rout(t_game *game, char **str, int *flg, t_list **tmp)
 			game->scount++;
 		i++;
 	}
+	ft_lstadd_back(tmp, ft_lstnew(*str));
 	game->map.d++;
-	if (*flg > 0)
-		if (len > game->map.w)
-			game->map.w = len;
+	chk_bigger_len(flg, len, game);
 	return (1);
 }

@@ -43,7 +43,7 @@ void	draw_spr_prepare(t_sprt *spr, t_game *game, int s)
 	spr->drw_end_y = spr->sprt_h / 2 + H / 2;
 	if (spr->drw_end_y >= H)
 		spr->drw_end_y = H;
-	spr->sprt_w = abs((int)(H / (spr->trform_y)));
+	spr->sprt_w = abs((int)(W / (spr->trform_y)));
 	spr->drw_start_x = -(spr->sprt_w) / 2 + spr->sprt_scr_x;
 	if (spr->drw_start_x < 0)
 		spr->drw_start_x = 0;
@@ -57,6 +57,7 @@ void	draw_sprites(t_game *game, int s)
 {
 	t_sprt	spr;
 
+	calc_sprite_dist(game);
 	while (s < game->scount)
 	{
 		draw_spr_prepare(&spr, game, s);
@@ -64,7 +65,7 @@ void	draw_sprites(t_game *game, int s)
 		{
 			spr.tex_x = (int)(256 * (spr.strp - (-(spr.sprt_w) / 2
 					+ spr.sprt_scr_x)) * TEXWIDTH / spr.sprt_w) / 256;
-			if (spr.trform_y > 0 && spr.strp > 0 && spr.strp < W
+			if (spr.trform_y >= 0 && spr.strp >= 0 && spr.strp < W
 			&& spr.trform_y < (game->z_buffer)[spr.strp])
 			{
 				spr.y = spr.drw_start_y;
