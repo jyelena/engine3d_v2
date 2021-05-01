@@ -68,7 +68,7 @@ int		valid_map(t_game *game)
 			if (game->map.mp[y][x] == ' ')
 			{
 				if (chk_round(y, x, game) < 0)
-					return (red_flag(-2, game));
+					wrt_err("Invalid map", 1, game, NULL);
 			}
 			if (game->map.mp[y][x] == 'N' || game->map.mp[y][x] == 'S'
 			|| game->map.mp[y][x] == 'W' || game->map.mp[y][x] == 'E')

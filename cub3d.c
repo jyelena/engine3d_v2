@@ -19,7 +19,7 @@ int		map_filename_valid(char *f_name, int argc)
 	len = ft_strlen(f_name);
 	if (f_name[len - 1] != 'b' || f_name[len - 2] != 'u'
 			|| f_name[len - 3] != 'c' || f_name[len - 4] != '.')
-		wrt_err("Invalid map filename", 1);
+		wrt_err("Invalid map filename", 1, NULL, NULL);
 	if (argc == 2)
 		return (0);
 	return (1);
@@ -33,19 +33,19 @@ int		get_map(int *fd, t_game *game, t_list **tmp)
 	fl = 0;
 	while (get_next_line(*fd, &str))
 		if (prs_map_rout(game, &str, &fl, tmp) < 0 || fl == 10 || fl == 2)
-			return (free_all(-2, game, tmp));
+			wrt_err("Invalid map", 1, game, tmp);
 	if (prs_map_rout(game, &str, &fl, tmp) < 0 || fl == 10 || fl == 1
 			|| fl == 0)
-		return (free_all(-2, game, tmp));
+		wrt_err("Invalid map", 1, game, tmp);
 	game->map.d += 2;
 	game->map.w += 2;
 	fl = 0;
 	if (game->ok && !(game->map.mp = ft_calloc(game->map.d + 1, sizeof(char*))))
-		return (free_all(-2, game, tmp));
+		wrt_err("Out of memory", 1, game, tmp);
 	while (fl < game->map.d)
 	{
 		if (!(game->map.mp[fl] = ft_calloc(game->map.w + 1, sizeof(char))))
-			return (free_all(-1, game, tmp));
+			wrt_err("Out of memory", 1, game, tmp);
 		fl++;
 	}
 	game->map.mp[fl] = NULL;
@@ -60,7 +60,7 @@ int		map_quest(int *fd, t_game *game)
 	tmp_map = NULL;
 	str = NULL;
 	if (read(*fd, str, 0) < 0)
-		wrt_err("Invalid config file", 1);
+		wrt_err("Invalid config file", 1, game, NULL);
 	while (game->ok && chk_map_conf(game) != 8
 	&& get_next_line(*fd, &str) == 1 && prs_rout(game, str) > -1)
 	{
@@ -84,7 +84,7 @@ void	process_option(char *option, t_game *game)
 
 	if (ft_strlen(option) != ft_strlen("--save") ||
 	ft_strncmp(option, "--save", ft_strlen(option)) != 0)
-		wrt_err("Unknown option", 1);
+		wrt_err("Unknown option", 1, game, NULL);
 	file_init(&file);
 	take_screenshot(game, &file);
 	exit(0);
@@ -112,7 +112,7 @@ int		main(int argc, char **argv)
 		}
 	}
 	else
-		wrt_err(NO_MAP_ERROR, 1);
+		wrt_err(NO_MAP_ERROR, 1, NULL, NULL);
 	free_params(&game);
 	if (game.map.mp && *(game.map.mp))
 		free_map_matrix(&game);

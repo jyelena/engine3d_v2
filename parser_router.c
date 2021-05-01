@@ -60,7 +60,7 @@ int		parse_clr_rout(t_game *game, char **str, char mode)
 
 	(*str)++;
 	if (*(*str) != 32 || get_chk(game, mode))
-		return (red_flag(-11, game));
+		wrt_err("Invalid params", 1, game, NULL);
 	trim_space_end(str);
 	fl = 0;
 	while (*(*str))
@@ -75,9 +75,9 @@ int		parse_clr_rout(t_game *game, char **str, char mode)
 		else if (*(*str) >= '0' && *(*str) <= '9')
 			parse_clr(game, str, mode, &fl);
 		else
-			return (red_flag(-11, game));
+			wrt_err("Invalid params", 1, game, NULL);
 		if (fl > 30 || fl == 1 || fl % 10 > 1)
-			return (red_flag(-11, game));
+			wrt_err("Invalid params", 1, game, NULL);
 	}
 	return (1);
 }
@@ -94,7 +94,7 @@ int		parse_pth_rout(t_game *game, char **str, int len)
 	|| ((*str)[0] == 'E' && (*str)[1] != 'A')
 	|| ((*str)[0] == 'O' && (*str)[1] != 32)
 	|| ((*str)[0] == 'S' && (*str)[1] != 32))
-		return (red_flag(-1, game));
+		wrt_err("Invalid params", 1, game, NULL);
 	if (mode == 'N' || mode == 'W' || mode == 'E')
 		(*str)++;
 	return (parse_pth(game, str, mode, len));
@@ -107,7 +107,7 @@ int		prs_rout(t_game *game, char *line)
 
 	len = trim_space(&line);
 	if (ft_strlen(line) == 1)
-		return (red_flag(-1, game));
+		wrt_err("Invalid params", 1, game, NULL);
 	mode = *line;
 	if (*line == 'R')
 		return (set_chk(parse_resolut(game, &line), game, mode));
@@ -124,6 +124,6 @@ int		prs_rout(t_game *game, char *line)
 	}
 	else if (!*line)
 		return (0);
-	free_all(-1, game, NULL);
-	wrt_err("Invalid params", 1);
+	wrt_err("Invalid params", 1, game, NULL);
+	return (0);
 }

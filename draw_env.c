@@ -16,19 +16,19 @@ void	check_textures(t_game *game)
 {
 	if (game->tex.ea.timg.img == NULL || game->tex.ea.w != 64 || game->tex.ea.h
 	!= 64)
-		wrt_err("Crached east textures", 1);
+		wrt_err("Crached east textures", 1, game, NULL);
 	if (game->tex.we.timg.img == NULL || game->tex.we.w != 64 || game->tex.we.h
 	!= 64)
-		wrt_err("Crached west textures", 1);
+		wrt_err("Crached west textures", 1, game, NULL);
 	if (game->tex.no.timg.img == NULL || game->tex.no.w != 64 || game->tex.no.h
 	!= 64)
-		wrt_err("Crached north textures", 1);
+		wrt_err("Crached north textures", 1, game, NULL);
 	if (game->tex.so.timg.img == NULL || game->tex.so.w != 64 || game->tex.so.h
 	!= 64)
-		wrt_err("Crached south textures", 1);
+		wrt_err("Crached south textures", 1, game, NULL);
 	if (game->tex.sp.timg.img == NULL || game->tex.sp.w != 64 || game->tex.sp.h
 	!= 64)
-		wrt_err("Crached sprite textures", 1);
+		wrt_err("Crached sprite textures", 1, game, NULL);
 }
 
 void	draw_env(t_game *game, int x)

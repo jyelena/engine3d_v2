@@ -12,29 +12,6 @@
 
 #include "cub3d.h"
 
-int		red_flag(int result, t_game *game)
-{
-	if (result < 0)
-	{
-		game->ok = 0;
-		if (result == -1)
-			wrt_err("Invalid params", 0);
-		if (result == -3)
-			wrt_err("Map not found", 0);
-		else if (result == -12)
-			wrt_err("Invalid resolution", 0);
-		else if (result == -2)
-			wrt_err("Invalid map", 0);
-		else if (result == -11)
-			wrt_err("Invalid color params", 0);
-		else if (result == -13)
-			wrt_err("Invalid filename", 0);
-		else
-			wrt_err("", 0);
-	}
-	return (result);
-}
-
 void	free_map_matrix(t_game *game)
 {
 	int i;
@@ -50,15 +27,13 @@ void	free_map_matrix(t_game *game)
 		free(game->map.mp);
 }
 
-int		free_all(int result, t_game *game, t_list **list)
+void	free_all(t_game *game, t_list **list)
 {
 	if (list && *list)
 		free_list(list);
 	if (game->map.mp && *(game->map.mp))
 		free_map_matrix(game);
-	if (result < 0)
-		game->ok = 0;
-	return (result);
+	exit(0);
 }
 
 void	free_list(t_list **list)

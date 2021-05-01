@@ -53,12 +53,12 @@ void	cub_init(t_game *game)
 	move_init(game);
 }
 
-void	wrt_err(char *text, int ext)
+void	wrt_err(char *text, int ext, t_game *game, t_list **list)
 {
 	write(1, "Error\n", 6);
 	while (*text)
 		write(1, text++, 1);
 	write(1, "\n", 1);
 	if (ext)
-		exit(0);
+		free_all(game, list);
 }
