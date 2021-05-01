@@ -42,7 +42,7 @@ clean:
 	@make clean -C ./dymlx
 fclean: clean
 	@rm -f $(NAME)
-	@rm libmlx.dylib
+	@rm -f libmlx.dylib
 	@make fclean -C ./libft
 bonus: re
 re: fclean all
